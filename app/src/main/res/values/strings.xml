@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SYNOP</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+
+    <plurals name="numberOfNewArticles">
+        <item quantity="one">%d new</item>
+        <item quantity="other">%d new</item>
+    </plurals>
+
+    <string-array name="drawer_titles">
+        <item>Favorites</item>
+        <item>Weather stations</item>
+        <item>Map</item>
+    </string-array>
+
+    <array name="drawer_icons">
+        <item>@drawable/ic_favorite_grey600</item>
+        <item>@drawable/ic_sales</item>
+        <item>@drawable/ic_action_map</item>
+    </array>
+
+    <array name="drawer_icons_active">
+        <item>@drawable/ic_favorite_black</item>
+        <item>@drawable/ic_sales</item>
+        <item>@drawable/ic_action_map</item>
+    </array>
+
+    <string-array name="footer_titles">
+        <item>Settings</item>
+        <item>Feedback</item>
+    </string-array>
+
+</resources>
