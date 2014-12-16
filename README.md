@@ -1,4 +1,4 @@
 SYNOP
 ==================
 
-Application for displaying weather stations SYNOPtical datas. 
+Application for displaying weather stations SYNOPtical datas.
