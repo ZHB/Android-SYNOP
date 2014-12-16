@@ -26,6 +26,7 @@ import com.previmet.synop.fragments.Blog_Fragment;
 import com.previmet.synop.fragments.Bookmark_Fragment;
 import com.previmet.synop.fragments.FavoritesFragment;
 import com.previmet.synop.fragments.Sales_Fragment;
+import com.previmet.synop.fragments.StationsFragment;
 import com.previmet.synop.ui.Items;
 
 import java.util.ArrayList;
@@ -218,7 +219,7 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new FavoritesFragment();
                 break;
             case 2:
-                fragment = new Sales_Fragment();
+                fragment = new StationsFragment();
                 break;
             case 3:
                 fragment = new Blog_Fragment();

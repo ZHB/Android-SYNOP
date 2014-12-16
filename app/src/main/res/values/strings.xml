@@ -12,25 +12,46 @@
 
     <string-array name="drawer_titles">
         <item>Favorites</item>
-        <item>Weather stations</item>
+        <item>Stations</item>
         <item>Map</item>
     </string-array>
 
     <array name="drawer_icons">
         <item>@drawable/ic_favorite_grey600</item>
-        <item>@drawable/ic_sales</item>
-        <item>@drawable/ic_action_map</item>
+        <item>@drawable/ic_account_balance_grey600</item>
+        <item>@drawable/ic_map_grey600</item>
     </array>
 
     <array name="drawer_icons_active">
         <item>@drawable/ic_favorite_black</item>
-        <item>@drawable/ic_sales</item>
-        <item>@drawable/ic_action_map</item>
+        <item>@drawable/ic_account_balance_black</item>
+        <item>@drawable/ic_map_black</item>
     </array>
 
     <string-array name="footer_titles">
         <item>Settings</item>
         <item>Feedback</item>
     </string-array>
+
+
+
+
+    <array name="stations_list">
+        <item>Aadorf / Tänikon</item>
+        <item>Acquarossa / Comprovasco</item>
+        <item>Adelboden</item>
+        <item>Aigle</item>
+        <item>Altdorf</item>
+        <item>Altenrhein</item>
+        <item>Andeer</item>
+        <item>Andermatt</item>
+        <item>Bad Ragaz</item>
+        <item>Basel / Binningen</item>
+        <item>Bern / Zollikofen</item>
+        <item>Beznau</item>
+        <item>Bière</item>
+        <item>Blatten, Lötschental</item>
+        <item>Boltigen</item>
+    </array>
 
 </resources>
