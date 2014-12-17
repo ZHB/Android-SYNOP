@@ -2,18 +2,20 @@
 <resources>
 
     <!-- Material Light_Blue Primary -->
-    <color name="color_light_blue_500">#0277bd</color>
-    <color name="color_light_blue_100">#b9e1f8</color>
-    <color name="color_light_blue_700">#1687ca</color>
+    <color name="color_light_blue_700">#1976d2</color>
+    <color name="color_light_blue_500">#2196f3</color>
+    <color name="color_light_blue_100">#bbdefb</color>
+
 
     <!-- Material Orange Accent -->
     <color name="color_orange_A200">#ff9800</color>
     <color name="color_orange_A100">#ffd180</color>
     <color name="color_orange_A400">#ff9100</color>
 
+    <color name="primary_color_dark">@color/color_light_blue_700</color>
     <color name="primary_color">@color/color_light_blue_500</color>
     <color name="primary_color_light">@color/color_light_blue_100</color>
-    <color name="primary_color_dark">@color/color_light_blue_700</color>
+
 
     <color name="accent_color">@color/color_orange_A200</color>
     <color name="accent_color_light">@color/color_orange_A100</color>
@@ -26,11 +28,11 @@
     <color name="color_bookmark">#FFC107</color>
     <color name="color_community">#F44336</color>
 
-    <!-- Text Colors -->
-    <color name="divider">#dadada</color>
-    <color name="hints">#b8b8b8</color>
-    <color name="secondary">#727272</color>
-    <color name="text">#212121</color>
+    <!-- Text Color. See : http://www.google.com/design/spec/style/color.html#color-ui-color-application -->
+    <color name="divider">#1a000000</color>
+    <color name="hintDisabled">#28000000</color>
+    <color name="secondary">#8c000000</color>
+    <color name="text">#d9000000</color>
 
     <!-- Google Brand Colors -->
     <color name="google_red">#dd4b39</color>
