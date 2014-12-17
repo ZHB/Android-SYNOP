@@ -28,11 +28,15 @@
     <color name="color_bookmark">#FFC107</color>
     <color name="color_community">#F44336</color>
 
-    <!-- Text Color. See : http://www.google.com/design/spec/style/color.html#color-ui-color-application -->
-    <color name="divider">#1a000000</color>
-    <color name="hintDisabled">#28000000</color>
-    <color name="secondary">#8c000000</color>
-    <color name="text">#d9000000</color>
+    <!--
+        Text Color.
+        See : http://www.google.com/design/spec/style/color.html#color-ui-color-application
+        See : http://stackoverflow.com/questions/5445085/understanding-colors-in-android-6-characters/11019879#11019879
+    -->
+    <color name="divider">#1f000000</color>
+    <color name="hintDisabled">#42000000</color>
+    <color name="secondary">#8a000000</color>
+    <color name="text">#de000000</color>
 
     <!-- Google Brand Colors -->
     <color name="google_red">#dd4b39</color>
