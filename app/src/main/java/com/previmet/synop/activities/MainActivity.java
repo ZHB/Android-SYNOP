@@ -189,6 +189,7 @@ public class MainActivity extends ActionBarActivity {
             actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, getResources().getDisplayMetrics());
         }
 
+        // get screen size
         Display display = getWindowManager().getDefaultDisplay();
         int width;
         int height;
@@ -201,6 +202,13 @@ public class MainActivity extends ActionBarActivity {
             width = display.getWidth();  // deprecated
             height = display.getHeight();  // deprecated
         }
+
+        // navigation drawer width must be the smallest screen with size minus toolbar height
+        // see : https://medium.com/sebs-top-tips/material-navigation-drawer-sizing-558aea1ad266
+        if(width >=  height) {
+            width = height;
+        }
+
         return width - actionBarHeight;
     }
 
