@@ -2,6 +2,7 @@ package com.previmet.synop.activities;
 
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -177,10 +178,16 @@ public class MainActivity extends ActionBarActivity {
         }
         int id = item.getItemId();
 
-
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Calculate navigation drawer max width size. It must be
+     * Smallest screen width - toolbar (action bar) height.
+     * see : http://www.google.com/design/spec/patterns/navigation-drawer.html
+     *
+     * @return int maximum navigation drawer width
+     */
     public int calculateDrawerWidth() {
         // Calculate ActionBar height
         TypedValue tv = new TypedValue();
@@ -203,7 +210,7 @@ public class MainActivity extends ActionBarActivity {
             height = display.getHeight();  // deprecated
         }
 
-        // navigation drawer width must be the smallest screen with size minus toolbar height
+        // navigation drawer width must be the smallest screen width size minus toolbar height
         // see : https://medium.com/sebs-top-tips/material-navigation-drawer-sizing-558aea1ad266
         if(width >=  height) {
             width = height;
@@ -253,6 +260,7 @@ public class MainActivity extends ActionBarActivity {
         setTitle(mDrawerTitles[position - 1]);
         mDrawerLayout.closeDrawer(mDrawerContainer);
     }
+
 
     /**
      * Navigation drawer list click listener.

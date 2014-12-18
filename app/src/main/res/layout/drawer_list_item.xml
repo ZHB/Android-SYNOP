@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:background="@drawable/n_drawer_item_selected"
     android:layout_height="@dimen/drawer_item_height">
 
     <!-- left icon -->
@@ -21,5 +22,6 @@
         android:paddingLeft="@dimen/drawer_text_with_icon"
         android:paddingRight="@dimen/drawer_right"
         android:textColor="@color/text"
+
         android:textSize="14sp" />
 </RelativeLayout>

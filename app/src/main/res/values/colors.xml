@@ -28,6 +28,9 @@
     <color name="color_bookmark">#FFC107</color>
     <color name="color_community">#F44336</color>
 
+    <!-- Navigation Drawer color -->
+    <color name="color_navigation_drawer_item_selected">#1A000000</color>
+
     <!--
         Text Color.
         See : http://www.google.com/design/spec/style/color.html#color-ui-color-application
