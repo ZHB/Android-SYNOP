@@ -23,8 +23,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
         // populate some initial values
         Db.addCountry("Suisse");
-        Db.addCountry("France");
-        Db.addCountry("Belgique");
+        //Db.addCountry("France");
+        //Db.addCountry("Belgique");
     }
 
     @Override

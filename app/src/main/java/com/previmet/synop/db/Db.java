@@ -21,7 +21,6 @@ public class Db {
         db = dbHelper.getWritableDatabase();
     }
 
-
     /**
      * Insert a child record
      * @param country country name
@@ -29,8 +28,8 @@ public class Db {
      */
     public static long addCountry(String country) {
         ContentValues values = new ContentValues();
-        values.put(DbContract.Country.COLUMN_NAME_COUNTRY, country);
 
+        values.put(DbContract.Country.COLUMN_NAME_COUNTRY, country);
         long id = db.insert(DbContract.Country.TABLE_NAME, null, values);
 
         return id;
@@ -52,8 +51,14 @@ public class Db {
     }
 
     /**
-     * Insert a child record
-     * @param country country name
+     *  Insert a station
+     *
+     * @param station
+     * @param wmo
+     * @param elevation
+     * @param latitude
+     * @param longitude
+     * @param country
      * @return ID of inserted row
      */
     public static long addStation(String station, String wmo, Integer elevation, Float latitude, Float longitude, long country) {
