@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 public class Db {
     public static SQLiteDatabase db;
 
+
     /**
      * Database initialisation
      * @param context context used by DbHelper
@@ -19,6 +20,14 @@ public class Db {
     public static void initialize(Context context) {
         DbHelper dbHelper = new DbHelper(context);
         db = dbHelper.getWritableDatabase();
+    }
+
+    /**
+     * Initialize database
+     * @param db database
+     */
+    public static void initialize(SQLiteDatabase db) {
+        Db.db = db;
     }
 
     /**
@@ -61,7 +70,7 @@ public class Db {
      * @param country
      * @return ID of inserted row
      */
-    public static long addStation(String station, String wmo, Integer elevation, Float latitude, Float longitude, long country) {
+    public static long addStation(String station, String wmo, Integer elevation, Double latitude, Double longitude, long country) {
         ContentValues values = new ContentValues();
         values.put(DbContract.Station.COLUMN_NAME_STATION, station);
         values.put(DbContract.Station.COLUMN_NAME_WMO, wmo);

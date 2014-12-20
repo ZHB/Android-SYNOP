@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.previmet.synop.R;
 import com.previmet.synop.adapter.StationListAdapter;
+import com.previmet.synop.db.Db;
+import com.previmet.synop.db.DbContract;
+import com.previmet.synop.db.DbCursor;
 import com.previmet.synop.ui.Items;
 import com.previmet.synop.ui.Station;
 
@@ -39,7 +42,11 @@ public class StationsFragment extends Fragment {
 
         // TODO: get stations from database
         // get stations list from xml
-        stationList = getResources().getStringArray(R.array.stations_list);
+        //stationList = getResources().getStringArray(R.array.stations_list);
+
+
+
+
 
         // get navigation drawer container
         //StationContainer = (ListView) findViewById(R.id.left_drawer);
@@ -50,8 +57,15 @@ public class StationsFragment extends Fragment {
         * Items are created with text and icons.
         */
         stationListItems = new ArrayList<Station>();
-        for (int i = 0; i < stationList.length; i++) {
-            stationListItems.add(new Station(stationList[i], "Suisse", 500));
+
+        DbCursor sCursor = Db.getStations();
+        while(sCursor.moveToNext()) {
+            // The Cursor is now set to the right position
+            stationListItems.add(new Station(
+                    sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_STATION)),
+                    sCursor.getString(sCursor.getColumnIndex(DbContract.Country.COLUMN_NAME_COUNTRY)),
+                    sCursor.getInt(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_ELEVATION)))
+            );
         }
 
 

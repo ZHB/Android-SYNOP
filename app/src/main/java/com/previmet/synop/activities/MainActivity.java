@@ -24,6 +24,7 @@ import android.widget.ListView;
 import com.previmet.synop.R;
 import com.previmet.synop.adapter.DrawerAdapter;
 import com.previmet.synop.db.Db;
+import com.previmet.synop.db.DbCursor;
 import com.previmet.synop.fragments.Blog_Fragment;
 import com.previmet.synop.fragments.Bookmark_Fragment;
 import com.previmet.synop.fragments.FavoritesFragment;
@@ -52,6 +53,7 @@ public class MainActivity extends ActionBarActivity {
 
         // initialize database
         Db.initialize(this);
+
 
         // check for our toolbar xml layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

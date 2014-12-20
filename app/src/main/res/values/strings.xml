@@ -5,11 +5,6 @@
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
 
-    <plurals name="numberOfNewArticles">
-        <item quantity="one">%d new</item>
-        <item quantity="other">%d new</item>
-    </plurals>
-
     <string-array name="drawer_titles">
         <item>Favorites</item>
         <item>Stations</item>
@@ -33,25 +28,9 @@
         <item>Feedback</item>
     </string-array>
 
-
-
-
-    <array name="stations_list">
-        <item>Aadorf / Tänikon</item>
-        <item>Acquarossa / Comprovasco</item>
-        <item>Adelboden</item>
-        <item>Aigle</item>
-        <item>Altdorf</item>
-        <item>Altenrhein</item>
-        <item>Andeer</item>
-        <item>Andermatt</item>
-        <item>Bad Ragaz</item>
-        <item>Basel / Binningen</item>
-        <item>Bern / Zollikofen</item>
-        <item>Beznau</item>
-        <item>Bière</item>
-        <item>Blatten, Lötschental</item>
-        <item>Boltigen</item>
-    </array>
-
+    <!-- station list -->
+    <plurals name="stationElevationUnit">
+        <item quantity="one">%d mètre</item>
+        <item quantity="other">%d mètres</item>
+    </plurals>
 </resources>

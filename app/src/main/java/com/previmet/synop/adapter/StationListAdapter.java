@@ -1,6 +1,7 @@
 package com.previmet.synop.adapter;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,12 +49,15 @@ public class StationListAdapter extends BaseAdapter {
             convertView = mInflater.inflate(R.layout.station_list_item, parent, false);
         }
 
-        //convertView.isSelected()
-        //ImageView image = (ImageView) convertView.findViewById(R.id.station_icon);
-        TextView text = (TextView) convertView.findViewById(R.id.station_name);
+        // pluralisation for station elevation
+        Resources res = context.getResources();
+        String elevation = res.getQuantityString(R.plurals.stationElevationUnit, stationListItems.get(position).getElevation(), stationListItems.get(position).getElevation());
 
-        //image.setImageResource(stationListItems.get(position).getIcon());
-        text.setText(stationListItems.get(position).getName());
+        TextView sName = (TextView) convertView.findViewById(R.id.station_name);
+        TextView sComplementary = (TextView) convertView.findViewById(R.id.station_complementary);
+
+        sName.setText(stationListItems.get(position).getName());
+        sComplementary.setText(stationListItems.get(position).getCountry() + " - " + elevation);
 
 
         return convertView;
