@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,18 +22,21 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.previmet.synop.R;
 import com.previmet.synop.adapter.DrawerAdapter;
 import com.previmet.synop.db.Db;
-import com.previmet.synop.db.DbCursor;
-import com.previmet.synop.fragments.Blog_Fragment;
 import com.previmet.synop.fragments.Bookmark_Fragment;
 import com.previmet.synop.fragments.FavoritesFragment;
+import com.previmet.synop.fragments.MapFragment;
 import com.previmet.synop.fragments.Sales_Fragment;
 import com.previmet.synop.fragments.StationsFragment;
 import com.previmet.synop.ui.Items;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -46,6 +50,8 @@ public class MainActivity extends ActionBarActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
 
+    public static FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +60,7 @@ public class MainActivity extends ActionBarActivity {
         // initialize database
         Db.initialize(this);
 
+        //fragmentManager = getSupportFragmentManager();
 
         // check for our toolbar xml layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -237,8 +244,7 @@ public class MainActivity extends ActionBarActivity {
     private void selectItem(int position) {
 
         Fragment fragment = null;
-
-        //Toast.makeText(getApplicationContext(),"[DEBUG] Button clicked is " + position, Toast.LENGTH_LONG).show();
+        SupportMapFragment mapFragment = null;
 
         switch (position) {
             case 1:
@@ -248,22 +254,38 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new StationsFragment();
                 break;
             case 3:
-                fragment = new Blog_Fragment();
+                mapFragment = new MapFragment();
                 break;
             case 4:
                 fragment = new Bookmark_Fragment();
                 break;
         }
 
+
+
         /*
          * Insert fragment into main content view
+         * http://stackoverflow.com/questions/19108843/mapfragment-return-null/19109093#19109093
          */
-        if (fragment != null) {
+        if (fragment != null && mapFragment == null) {
             // Insert the fragment by replacing any existing fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
+            //FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager = getSupportFragmentManager();
+
             fragmentManager.beginTransaction()
                     .replace(R.id.main_content, fragment)
                     .commit();
+        }
+
+        if (mapFragment != null) {
+
+            fragmentManager = getSupportFragmentManager();
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.main_content, mapFragment)
+                    .commit();
+
+            MapsInitializer.initialize(this);
         }
 
         // Highlight the selected item, update the title, and close the drawer
@@ -282,5 +304,4 @@ public class MainActivity extends ActionBarActivity {
             selectItem(position);
         }
     }
-
 }

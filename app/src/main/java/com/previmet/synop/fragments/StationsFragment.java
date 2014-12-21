@@ -39,15 +39,6 @@ public class StationsFragment extends Fragment {
         // the rootView is our station list res.layout.fragmentStations
         View rootView = inflater.inflate(R.layout.fragment_stations, container, false);
 
-
-        // TODO: get stations from database
-        // get stations list from xml
-        //stationList = getResources().getStringArray(R.array.stations_list);
-
-
-
-
-
         // get navigation drawer container
         //StationContainer = (ListView) findViewById(R.id.left_drawer);
         stationListContainer = (ListView) rootView.findViewById(R.id.list_stations);
