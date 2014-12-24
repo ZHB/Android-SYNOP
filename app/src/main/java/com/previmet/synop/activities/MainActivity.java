@@ -1,5 +1,6 @@
 package com.previmet.synop.activities;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -69,7 +70,6 @@ public class MainActivity extends ActionBarActivity {
         if (toolbar != null) {
             setSupportActionBar(toolbar);
         }
-
 
         // get xml string and icons array for our menu res/values/strings.xml
         mDrawerTitles = getResources().getStringArray(R.array.drawer_titles);
@@ -156,6 +156,9 @@ public class MainActivity extends ActionBarActivity {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
+
+        // start default fragment view
+        selectItem(1);
     }
 
     @Override
@@ -259,6 +262,9 @@ public class MainActivity extends ActionBarActivity {
             case 4:
                 fragment = new Bookmark_Fragment();
                 break;
+            default:
+                fragment = new FavoritesFragment();
+                break;
         }
 
 
@@ -303,5 +309,10 @@ public class MainActivity extends ActionBarActivity {
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             selectItem(position);
         }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -1,184 +1,38 @@
-<LinearLayout
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
-    android:orientation="vertical" >
-
-    <!-- Top favorite Card View -->
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardFavoriteTop"
-        android:layout_gravity="top"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="8dp"
+    tools:context=".MyActivity">
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cardList"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        card_view:cardCornerRadius="0dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ffffff"
-            android:weightSum="8">
-
-            <!-- left icon -->
-            <ImageView
-                android:id="@+id/item_icon2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-
-                android:layout_weight="2"
-                android:layout_marginRight="10dp"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/sunny_fog"
-                android:layout_gravity="center_horizontal"
-                android:scaleType="fitCenter" />
+        android:layout_height="match_parent">
 
 
-            <TextView
-                android:id="@+id/txtFavoriteTopTemperature"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3"
-                android:layout_centerVertical="true"
-                android:ellipsize="end"
-                android:paddingLeft="0dp"
-                android:paddingTop="15dp"
-                android:paddingRight="@dimen/drawer_right"
-                android:text="5.3°"
-                android:textColor="@color/text"
-                android:textSize="30dp"
-                android:singleLine="false"
-                android:gravity="center_horizontal|top" />
-
-            <!-- text -->
-            <!-- text -->
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_weight="3"
-
-                android:transitionGroup="false">
-
-                <TextView
-                    android:id="@+id/item_text2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:layout_centerVertical="true"
-                    android:ellipsize="end"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="@dimen/drawer_right"
-                    android:text="Pression : "
-                    android:textColor="@color/text"
-                    android:textSize="14sp" />
-                <TextView
-                    android:id="@+id/item_text3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:layout_centerVertical="true"
-                    android:ellipsize="end"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="@dimen/drawer_right"
-                    android:text="Vent moy. : "
-                    android:textColor="@color/text"
-                    android:textSize="14sp" />
-                <TextView
-                    android:id="@+id/item_text4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3"
-                    android:layout_centerVertical="true"
-                    android:ellipsize="end"
-                    android:paddingLeft="0dp"
-                    android:paddingRight="@dimen/drawer_right"
-                    android:text="Humidité :"
-                    android:textColor="@color/text"
-                    android:textSize="14sp" />
-            </LinearLayout>
+    </android.support.v7.widget.RecyclerView>
 
 
-
-
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <!-- Scroll View for all favorites -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="5dp"
-        android:layout_gravity="top"
-        android:weightSum="2"
-        android:scrollbars="none">
-
-        <!-- Linear layout for displaying card view in two columns -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:weightSum="2">
-
-                <!-- A CardView that contains a TextView -->
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/cardFavoriteTop2"
-                    android:layout_gravity="top"
-                    android:layout_width="match_parent"
-                    android:layout_height="90dp"
-                    android:layout_marginRight="2.5dp"
-                    android:layout_weight="1"
-                    card_view:cardCornerRadius="0dp">
-
-                    <TextView
-                        android:id="@+id/txtFavoriteTop2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:padding="5dp"
-                        android:layout_weight="1"
-                        android:background="#ffffff"
-                        android:text="Bouveret"
-                        android:singleLine="true" />
-
-                </android.support.v7.widget.CardView>
-
-            <!-- A CardView that contains a TextView -->
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/cardFavoriteTop3"
-                android:layout_gravity="top"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_marginLeft="2.5dp"
-                android:layout_weight="1"
-                card_view:cardCornerRadius="0dp">
-
-                <TextView
-                    android:id="@+id/txtFavoriteTop3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:padding="5dp"
-                    android:layout_weight="1"
-                    android:background="#ffffff"
-                    android:text="Sion"
-                    android:singleLine="true" />
-
-            </android.support.v7.widget.CardView>
-
-
-
-        </LinearLayout>
-
-
-
-
-    </ScrollView>
-
-</LinearLayout>
-
-
+    <!-- Floating action button -->
+    <ImageButton
+        android:id="@+id/fab_button"
+        android:transitionName="fab"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/cardList"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/fab"
+        android:src="@drawable/ic_add_white_24dp"
+        android:elevation="8dp"
+        android:padding="14dp"
+        android:scaleType="fitCenter"/>
+</RelativeLayout>
