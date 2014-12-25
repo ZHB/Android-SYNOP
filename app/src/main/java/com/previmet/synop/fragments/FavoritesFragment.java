@@ -3,15 +3,13 @@ package com.previmet.synop.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.previmet.synop.R;
 import com.previmet.synop.activities.StationActivity;
@@ -28,12 +26,11 @@ public class FavoritesFragment extends Fragment {
 
     private TextView hourlyListView;
     private ArrayList<Station> stationListItems;
+    private FavoriteAdapter fa;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -43,11 +40,12 @@ public class FavoritesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
 
         RecyclerView recList = (RecyclerView) rootView.findViewById(R.id.cardList);
-        recList.setHasFixedSize(false);
+        recList.setHasFixedSize(true);
 
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
+        recList.setItemAnimator(new DefaultItemAnimator());
 
         stationListItems = new ArrayList<Station>();
 
@@ -61,32 +59,29 @@ public class FavoritesFragment extends Fragment {
             );
         }
 
-        FavoriteAdapter fa = new FavoriteAdapter(stationListItems);
+        fa = new FavoriteAdapter(stationListItems);
         recList.setAdapter(fa);
 
-
-
-        /*
-        recList.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                Toast.makeText(getActivity(),"Text!",Toast.LENGTH_SHORT).show();
-
-            }
-
-
-        });*/
-
-        // get the list view
-        //hourlyListView = (TextView) rootView.findViewById(R.id.info_text);
-        //hourlyListView.setText("jdsd");
-
-        //hourlyListView.setAdapter(new HourlyListAdapter());
-
-        //hourlyListView = (ListView) findViewById(R.id.left_drawer);
-
-
         return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view , Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // add a listener on the RecyclerView adapter
+        fa.SetOnItemClickListener(new FavoriteAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                // get station object from clicked item position
+                Station station = stationListItems.get(position);
+
+                // start a new intent with station as extra then start activity
+                Intent intent = new Intent(view.getContext(), StationActivity.class);
+                intent.putExtra("station", station);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 }

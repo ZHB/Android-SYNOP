@@ -1,6 +1,5 @@
 package com.previmet.synop.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,16 +9,13 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.previmet.synop.R;
-import com.previmet.synop.activities.MainActivity;
 import com.previmet.synop.activities.StationActivity;
 import com.previmet.synop.adapter.StationListAdapter;
 import com.previmet.synop.db.Db;
 import com.previmet.synop.db.DbContract;
 import com.previmet.synop.db.DbCursor;
-import com.previmet.synop.ui.Items;
 import com.previmet.synop.ui.Station;
 
 import java.util.ArrayList;

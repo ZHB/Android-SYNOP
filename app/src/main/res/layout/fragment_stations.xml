@@ -10,4 +10,8 @@
     android:divider="@color/divider"
     android:paddingTop="8dp"
     android:paddingBottom="8dp"
-    android:dividerHeight="1dp"/>
+    android:dividerHeight="1dp"
+    android:scrollbars="vertical"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:fastScrollEnabled="true"
+    android:fastScrollAlwaysVisible="true" />

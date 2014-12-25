@@ -8,15 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.previmet.synop.R;
-
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.previmet.synop.R;
 import com.previmet.synop.ui.Station;
@@ -29,6 +21,7 @@ import java.util.ArrayList;
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ContactViewHolder> {
 
     private ArrayList<Station> stationListItems;
+    private OnItemClickListener mItemClickListener;
 
     public FavoriteAdapter(ArrayList<Station> stationListItems) {
         this.stationListItems = stationListItems;
@@ -47,7 +40,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Contac
         contactViewHolder.vUpdated.setText("18:00 UTC");
         contactViewHolder.vCondition1.setText("Temperature 9.4 °, wind West 3.7/11.1 km/h");
         contactViewHolder.vCondition2.setText("Precipitation 0/1h");
-
     }
 
     @Override
@@ -59,14 +51,19 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Contac
         return new ContactViewHolder(itemView);
     }
 
-    public static class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public void SetOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.mItemClickListener = onItemClickListener;
+    }
+
+    public interface OnItemClickListener {
+        public void onItemClick(View view , int position);
+    }
+
+    public class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         protected TextView vStation;
         protected TextView vUpdated;
         protected TextView vCondition1;
         protected TextView vCondition2;
-
-
-
 
         public ContactViewHolder(View v) {
             super(v);
@@ -86,7 +83,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Contac
          */
         @Override
         public void onClick(View v) {
-            Toast.makeText(v.getContext(), "Click on : " + v.getId(), Toast.LENGTH_SHORT).show();
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(v, getPosition());
+            }
         }
     }
 }
