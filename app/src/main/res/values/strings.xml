@@ -34,6 +34,8 @@
     </plurals>
 
     <string name="title_activity_station">StationActivity</string>
+    <string name="title_activity_add_favorite">Add favorite</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 

@@ -19,10 +19,10 @@
 
     <!-- Floating action button -->
     <ImageButton
-        android:id="@+id/fab_button"
+        android:id="@+id/fab_add_favorite"
         android:transitionName="fab"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_below="@+id/toolbar"
@@ -32,7 +32,8 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/fab"
         android:src="@drawable/ic_add_white_24dp"
-        android:elevation="8dp"
+        android:elevation="@dimen/button_elevation"
         android:padding="14dp"
+        android:stateListAnimator="@anim/anim"
         android:scaleType="fitCenter"/>
 </RelativeLayout>

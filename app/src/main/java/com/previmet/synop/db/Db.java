@@ -110,4 +110,41 @@ public class Db {
         return new DbCursor(c);
     }
 
+    public static long addFavorite(Integer order, long station) {
+        ContentValues values = new ContentValues();
+        values.put(DbContract.Favorite.COLUMN_NAME_ORDER, order);
+        values.put(DbContract.Favorite.COLUMN_NAME_STATION, station);
+
+        long id = db.insert(DbContract.Favorite.TABLE_NAME, null, values);
+
+        return id;
+    }
+
+    /**
+     * Get all stations with countries
+     * @return cursor containing countries
+     */
+    public static DbCursor getFavorite(){
+        String[] projection = {
+                "f." + DbContract.Favorite._ID,
+                DbContract.Favorite.COLUMN_NAME_ORDER,
+                DbContract.Station.COLUMN_NAME_STATION,
+                DbContract.Station.COLUMN_NAME_WMO,
+                DbContract.Station.COLUMN_NAME_ELEVATION,
+                DbContract.Station.COLUMN_NAME_LATITUDE,
+                DbContract.Station.COLUMN_NAME_LONGITUDE,
+                DbContract.Country.COLUMN_NAME_COUNTRY
+        };
+
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(
+                DbContract.Favorite.TABLE_NAME + " f " +
+                DbContract.Favorite.SQL_JOIN_STATION + " " +
+                DbContract.Station.SQL_JOIN_COUNTRY
+        );
+
+        Cursor c = qb.query(db, projection, null, null, null, null, DbContract.Station.COLUMN_NAME_STATION);
+
+        return new DbCursor(c);
+    }
 }

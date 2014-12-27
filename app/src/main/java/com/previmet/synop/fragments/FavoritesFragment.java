@@ -1,6 +1,7 @@
 package com.previmet.synop.fragments;
 
 import android.content.Intent;
+import android.graphics.Outline;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -9,9 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.previmet.synop.R;
+import com.previmet.synop.activities.AddFavoriteActivity;
 import com.previmet.synop.activities.StationActivity;
 import com.previmet.synop.adapter.FavoriteAdapter;
 import com.previmet.synop.db.Db;
@@ -30,14 +36,18 @@ public class FavoritesFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // the rootView is our Favorite_Fragment java.fragments.FavoritesFragment
-        View rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
 
         RecyclerView recList = (RecyclerView) rootView.findViewById(R.id.cardList);
         recList.setHasFixedSize(true);
@@ -49,7 +59,7 @@ public class FavoritesFragment extends Fragment {
 
         stationListItems = new ArrayList<Station>();
 
-        DbCursor sCursor = Db.getStations();
+        DbCursor sCursor = Db.getFavorite();
         while(sCursor.moveToNext()) {
             // The Cursor is now set to the right position
             stationListItems.add(new Station(
@@ -61,6 +71,18 @@ public class FavoritesFragment extends Fragment {
 
         fa = new FavoriteAdapter(stationListItems);
         recList.setAdapter(fa);
+
+
+
+        ImageButton fabFavorite = (ImageButton) rootView.findViewById(R.id.fab_add_favorite);
+        fabFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(rootView.getContext(), AddFavoriteActivity.class);
+                getActivity().startActivity(intent);
+            }
+
+        });
 
         return rootView;
     }

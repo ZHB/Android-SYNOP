@@ -6,7 +6,7 @@ import android.provider.BaseColumns;
  * Created by Vince on 20.12.2014.
  */
 public class DbContract {
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "SYNOP.sqlite";
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
@@ -77,8 +77,46 @@ public class DbContract {
 
         public static final String SQL_DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
-        public static final String SQL_JOIN_COUNTRY =
+        public static final String SQL_JOIN_STATION =
                 "LEFT JOIN " + Station.TABLE_NAME + " s " +
                         " ON s." + Station._ID + " = " + COLUMN_NAME_STATION;
+    }
+
+    /**
+     * Favorites table definition
+     */
+    public static abstract class Data implements BaseColumns {
+        public static final String TABLE_NAME = "data";
+        public static final String COLUMN_NAME_TMP = "temperature";
+        public static final String COLUMN_NAME_DEWPOINT = "dewpoint";
+        public static final String COLUMN_NAME_WINDDIR = "wnddir";
+        public static final String COLUMN_NAME_WINDSPEED = "wndspd";
+        public static final String COLUMN_NAME_WINDAVG = "wndavg";
+        public static final String COLUMN_NAME_WINDGUST = "wndgust";
+        public static final String COLUMN_NAME_HUMIDITY = "humidity";
+        public static final String COLUMN_NAME_PRESSURE = "pressure";
+        public static final String COLUMN_NAME_VISIBILITY = "visibility";
+        public static final String COLUMN_NAME_NEBULOSITY = "nebulosity";
+        public static final String COLUMN_NAME_CONDITION = "condition";
+        public static final String COLUMN_NAME_STATION = "id_station";
+
+        public static final String SQL_CREATE_TABLE =
+                "CREATE TABLE " + TABLE_NAME + " (" +
+                        _ID + " INTEGER PRIMARY KEY, " +
+                        COLUMN_NAME_TMP         + DECIMAL_TYPE     + COMMA_SEP +
+                        COLUMN_NAME_DEWPOINT    + DECIMAL_TYPE     + COMMA_SEP +
+                        COLUMN_NAME_WINDDIR     + TEXT_TYPE        + COMMA_SEP +
+                        COLUMN_NAME_WINDSPEED   + DECIMAL_TYPE     + COMMA_SEP +
+                        COLUMN_NAME_WINDAVG     + DECIMAL_TYPE     + COMMA_SEP +
+                        COLUMN_NAME_WINDGUST    + DECIMAL_TYPE     + COMMA_SEP +
+                        COLUMN_NAME_HUMIDITY    + INTEGER_TYPE     + COMMA_SEP +
+                        COLUMN_NAME_PRESSURE    + DECIMAL_TYPE     + COMMA_SEP +
+                        COLUMN_NAME_VISIBILITY  + INTEGER_TYPE     + COMMA_SEP +
+                        COLUMN_NAME_NEBULOSITY  + INTEGER_TYPE     + COMMA_SEP +
+                        COLUMN_NAME_CONDITION   + INTEGER_TYPE     + COMMA_SEP +
+                        COLUMN_NAME_STATION     + INTEGER_TYPE     +
+                        ")";
+
+        public static final String SQL_DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 }

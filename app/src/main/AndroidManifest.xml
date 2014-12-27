@@ -39,6 +39,10 @@
             android:name=".activities.StationActivity"
             android:label="@string/title_activity_station" >
         </activity>
+        <activity
+            android:name=".activities.AddFavoriteActivity"
+            android:label="@string/title_activity_add_favorite" >
+        </activity>
     </application>
 
 </manifest>

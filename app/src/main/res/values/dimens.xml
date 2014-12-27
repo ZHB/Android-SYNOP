@@ -12,4 +12,11 @@
     <dimen name="drawer_grouping_padding">8dp</dimen>
     <dimen name="drawer_item_height">48dp</dimen>
 
+
+
+    <!-- FAB -->
+    <dimen name="fab_size">56dp</dimen>
+    <dimen name="button_elevation">4dp</dimen>
+    <dimen name="button_press_elevation">8dp</dimen>
+
 </resources>

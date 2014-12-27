@@ -116,9 +116,9 @@ public class DbHelper extends SQLiteOpenHelper {
         Db.addStation("St-Prex", "6706",425,46.4836,6.443,idSuisse);
         Db.addStation("Villars - Tiercelin", "6707",859,46.62176,6.71007,idSuisse);
         Db.addStation("Oron", "6708",827,46.5722,6.8581,idSuisse);
-        Db.addStation("Bouveret", "6709",374,46.393444,6.857012,idSuisse);
+        long idBouveret = Db.addStation("Bouveret", "6709",374,46.393444,6.857012,idSuisse);
         Db.addStation("Pully", "6711",456,46.5123,6.6674,idSuisse);
-        Db.addStation("Aigle", "6712",408,46.3266,6.9244,idSuisse);
+        long idAigle = Db.addStation("Aigle", "6712",408,46.3266,6.9244,idSuisse);
         Db.addStation("Les Diablerets", "6714",2964,46.3267,7.2037,idSuisse);
         Db.addStation("Evionnaz", "6715",482,46.18295,7.02675,idSuisse);
         Db.addStation("Col du Grand St-Bernard", "6717",2472,45.8687,7.1707,idSuisse);
@@ -302,6 +302,11 @@ public class DbHelper extends SQLiteOpenHelper {
         Db.addStation("Ersa - Cap Corse", "7785",108,43.0056,9.3582,idFrance);
         Db.addStation("Bastia - Poretta", "7790",8,42.5509,9.4812,idFrance);
         Db.addStation("Sisco - Cap Sagro", "7791",111,42.798,9.4899,idFrance);
+
+
+        // add default favorites stations
+        Db.addFavorite(1, idAigle);
+        Db.addFavorite(2, idBouveret);
 
     }
 
