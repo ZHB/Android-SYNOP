@@ -62,9 +62,8 @@ public class StationsFragment extends Fragment {
             );
         }
 
-
-
-        StationListAdapter adapter = new StationListAdapter(rootView.getContext(), stationListItems);
+        //StationListAdapter adapter = new StationListAdapter(rootView.getContext(), stationListItems);
+        StationListAdapter adapter = new StationListAdapter(rootView.getContext(), R.layout.station_list_item, stationListItems);
 
         // Set the adapter for the list view
         stationListContainer.setAdapter(adapter);

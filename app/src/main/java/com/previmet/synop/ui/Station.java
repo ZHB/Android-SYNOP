@@ -8,6 +8,7 @@ import android.os.Parcelable;
  */
 public class Station implements Parcelable {
 
+    private long id;
     private String name;
     private String country;
     private int elevation;
@@ -24,6 +25,17 @@ public class Station implements Parcelable {
         this.name = name;
         this.country = country;
         this.elevation = elevation;
+    }
+
+    public Station(long id, String name, String country, int elevation) {
+        this.id = id;
+        this.name = name;
+        this.country = country;
+        this.elevation = elevation;
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getName() {

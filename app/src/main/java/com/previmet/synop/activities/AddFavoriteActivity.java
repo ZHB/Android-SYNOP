@@ -1,6 +1,8 @@
 package com.previmet.synop.activities;
 
+import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
@@ -12,23 +14,31 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.previmet.synop.R;
+import com.previmet.synop.adapter.StationListAdapter;
+import com.previmet.synop.adapter.StationSearchAdapter;
+import com.previmet.synop.db.Db;
+import com.previmet.synop.db.DbContract;
+import com.previmet.synop.db.DbCursor;
 import com.previmet.synop.ui.Station;
 
-public class AddFavoriteActivity extends ActionBarActivity implements TextWatcher {
+import java.util.ArrayList;
 
-    String item[]={
-            "January", "February", "March", "April",
-            "May", "June", "July", "August",
-            "September", "October", "November", "December"
-    };
+public class AddFavoriteActivity extends ActionBarActivity {
 
 
-    AutoCompleteTextView myAutoComplete;
+    private AutoCompleteTextView myAutoComplete;
+    private ArrayList<Station> stationListItems;
+    private StationListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,12 +59,66 @@ public class AddFavoriteActivity extends ActionBarActivity implements TextWatche
             getSupportActionBar().setTitle("Add favorite");
         }
 
+        /*
+        * create a new array list for our navigation drawer that will contain Items object.
+        * Items are created with text and icons.
+        */
+        stationListItems = new ArrayList<Station>();
 
-        myAutoComplete = (AutoCompleteTextView)findViewById(R.id.myautocomplete);
+        DbCursor sCursor = Db.getStations();
+        while(sCursor.moveToNext()) {
+            // The Cursor is now set to the right position
+            stationListItems.add(new Station(
+                            sCursor.getLong(sCursor.getColumnIndex(DbContract.Station._ID)),
+                            sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_STATION)),
+                            sCursor.getString(sCursor.getColumnIndex(DbContract.Country.COLUMN_NAME_COUNTRY)),
+                            sCursor.getInt(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_ELEVATION)))
+            );
+        }
 
-        myAutoComplete.addTextChangedListener(this);
-        myAutoComplete.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, item));
 
+        ListView stationListContainer = (ListView) findViewById(R.id.list_stations);
+
+        // Set the adapter for the list view
+        //StationListAdapter adapter = new StationListAdapter(this, stationListItems);
+        adapter = new StationListAdapter(this, R.layout.station_list_item, stationListItems);
+        stationListContainer.setAdapter(adapter);
+
+
+        stationListContainer.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+
+                // get clicked station
+                Station station = stationListItems.get(position);
+
+                // add the favorite to database
+                long fId = Db.addFavorite(station.getId());
+
+
+                // stop the activity
+                finish();
+            }
+        });
+
+
+        // get edit text for list filtering
+        EditText sSearch = (EditText) findViewById(R.id.eText_sSearch);
+        sSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+                // When user changed the Text
+                AddFavoriteActivity.this.adapter.getFilter().filter(cs);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,int arg3) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+            }
+        });
     }
 
 
@@ -82,62 +146,6 @@ public class AddFavoriteActivity extends ActionBarActivity implements TextWatche
         this.finish();
 
         return super.onOptionsItemSelected(item);
-
-    }
-
-
-    /**
-     * This method is called to notify you that, within <code>s</code>,
-     * the <code>count</code> characters beginning at <code>start</code>
-     * are about to be replaced by new text with length <code>after</code>.
-     * It is an error to attempt to make changes to <code>s</code> from
-     * this callback.
-     *
-     * @param s
-     * @param start
-     * @param count
-     * @param after
-     */
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    /**
-     * This method is called to notify you that, within <code>s</code>,
-     * the <code>count</code> characters beginning at <code>start</code>
-     * have just replaced old text that had length <code>before</code>.
-     * It is an error to attempt to make changes to <code>s</code> from
-     * this callback.
-     *
-     * @param s
-     * @param start
-     * @param before
-     * @param count
-     */
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    /**
-     * This method is called to notify you that, somewhere within
-     * <code>s</code>, the text has been changed.
-     * It is legitimate to make further changes to <code>s</code> from
-     * this callback, but be careful not to get yourself into an infinite
-     * loop, because any changes you make will cause this method to be
-     * called again recursively.
-     * (You are not told where the change took place because other
-     * afterTextChanged() methods may already have made other changes
-     * and invalidated the offsets.  But if you need to know here,
-     * you can use {@link Spannable#setSpan} in {@link #onTextChanged}
-     * to mark your place and then look up from here where the span
-     * ended up.
-     *
-     * @param s
-     */
-    @Override
-    public void afterTextChanged(Editable s) {
 
     }
 }

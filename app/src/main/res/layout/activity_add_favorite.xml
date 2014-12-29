@@ -29,17 +29,32 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <EditText android:id="@+id/eText_sSearch"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:text="Test"
-                    />
-
-                <AutoCompleteTextView android:id="@+id/myautocomplete"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:completionThreshold="1"
-                    />
+                    android:hint="Search a station..."
+                    android:inputType="textFilter"
+                    android:textColor="@color/secondary"
+                    android:background="@color/google_white"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:paddingTop="4dp"
+                    android:paddingBottom="4dp" />
+                <ListView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/list_stations"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#fff"
+                    android:choiceMode="singleChoice"
+                    android:divider="@color/divider"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:dividerHeight="1dp"
+                    android:scrollbars="vertical"
+                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:fastScrollEnabled="true"
+                    android:fastScrollAlwaysVisible="true" />
 
 
             </LinearLayout>

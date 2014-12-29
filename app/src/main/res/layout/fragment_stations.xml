@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- The navigation drawer -->
-<ListView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/list_stations"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#fff"
-    android:choiceMode="singleChoice"
-    android:divider="@color/divider"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:dividerHeight="1dp"
-    android:scrollbars="vertical"
-    android:scrollbarAlwaysDrawVerticalTrack="true"
-    android:fastScrollEnabled="true"
-    android:fastScrollAlwaysVisible="true" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    <ListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/list_stations"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#fff"
+        android:choiceMode="singleChoice"
+        android:divider="@color/divider"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:dividerHeight="1dp"
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:fastScrollEnabled="true"
+        android:fastScrollAlwaysVisible="true" />
+</LinearLayout>

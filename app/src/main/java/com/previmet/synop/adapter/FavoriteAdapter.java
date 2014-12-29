@@ -5,10 +5,14 @@ package com.previmet.synop.adapter;
  */
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.previmet.synop.R;
 import com.previmet.synop.ui.Station;
@@ -22,6 +26,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Contac
 
     private ArrayList<Station> stationListItems;
     private OnItemClickListener mItemClickListener;
+    private OnItemPressedListener mItemLongClickListener;
 
     public FavoriteAdapter(ArrayList<Station> stationListItems) {
         this.stationListItems = stationListItems;
@@ -55,18 +60,31 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Contac
         this.mItemClickListener = onItemClickListener;
     }
 
+    public void SetOnItemPressedListener(OnItemPressedListener mItemLongClickListener) {
+        this.mItemLongClickListener = mItemLongClickListener;
+    }
+
+
+
     public interface OnItemClickListener {
         public void onItemClick(View view , int position);
     }
 
-    public class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public interface OnItemPressedListener {
+        public void onItemPressed(View view , int position);
+    }
+
+    public class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         protected TextView vStation;
         protected TextView vUpdated;
         protected TextView vCondition1;
         protected TextView vCondition2;
+        protected View v;
 
         public ContactViewHolder(View v) {
             super(v);
+
+            this.v = v;
 
             vStation = (TextView) v.findViewById(R.id.favorite_station);
             vUpdated = (TextView)  v.findViewById(R.id.favorite_updated);
@@ -74,6 +92,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Contac
             vCondition2 =  (TextView) v.findViewById(R.id.favorite_condition2);
 
             v.setOnClickListener(this);
+            v.setOnLongClickListener(this);
         }
 
         /**
@@ -86,6 +105,17 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Contac
             if (mItemClickListener != null) {
                 mItemClickListener.onItemClick(v, getPosition());
             }
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+
+
+            if (mItemLongClickListener != null) {
+                mItemLongClickListener.onItemPressed(v, getPosition());
+            }
+
+            return false;
         }
     }
 }

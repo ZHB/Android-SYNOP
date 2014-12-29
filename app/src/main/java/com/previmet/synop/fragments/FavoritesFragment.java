@@ -36,11 +36,7 @@ public class FavoritesFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
-
-
-
     }
 
     @Override
@@ -63,6 +59,7 @@ public class FavoritesFragment extends Fragment {
         while(sCursor.moveToNext()) {
             // The Cursor is now set to the right position
             stationListItems.add(new Station(
+                            sCursor.getLong(sCursor.getColumnIndex(DbContract.Station._ID)),
                             sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_STATION)),
                             sCursor.getString(sCursor.getColumnIndex(DbContract.Country.COLUMN_NAME_COUNTRY)),
                             sCursor.getInt(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_ELEVATION)))
@@ -72,12 +69,12 @@ public class FavoritesFragment extends Fragment {
         fa = new FavoriteAdapter(stationListItems);
         recList.setAdapter(fa);
 
-
-
+        // start favorite add activity
         ImageButton fabFavorite = (ImageButton) rootView.findViewById(R.id.fab_add_favorite);
         fabFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+
                 Intent intent = new Intent(rootView.getContext(), AddFavoriteActivity.class);
                 getActivity().startActivity(intent);
             }
@@ -90,6 +87,7 @@ public class FavoritesFragment extends Fragment {
     @Override
     public void onViewCreated(View view , Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         // add a listener on the RecyclerView adapter
         fa.SetOnItemClickListener(new FavoriteAdapter.OnItemClickListener() {
@@ -105,5 +103,19 @@ public class FavoritesFragment extends Fragment {
                 getActivity().startActivity(intent);
             }
         });
+
+        fa.SetOnItemPressedListener(
+                new FavoriteAdapter.OnItemPressedListener() {
+                    @Override
+                    public void onItemPressed(View view, int position) {
+
+                        // remove item from the current list, then notify the adapter
+                        Db.deleteFavorite(stationListItems.get(position).getId());
+                        stationListItems.remove(position);
+                        fa.notifyItemRemoved(position);
+                    }
+                }
+
+        );
     }
 }

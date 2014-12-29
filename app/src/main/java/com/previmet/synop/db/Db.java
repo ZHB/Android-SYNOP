@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by Vince on 20.12.2014.
  */
@@ -110,14 +114,24 @@ public class Db {
         return new DbCursor(c);
     }
 
-    public static long addFavorite(Integer order, long station) {
+    public static long addFavorite(long station) {
         ContentValues values = new ContentValues();
-        values.put(DbContract.Favorite.COLUMN_NAME_ORDER, order);
+        values.put(DbContract.Favorite.COLUMN_NAME_ORDER, 1000);
         values.put(DbContract.Favorite.COLUMN_NAME_STATION, station);
 
         long id = db.insert(DbContract.Favorite.TABLE_NAME, null, values);
 
         return id;
+    }
+
+
+    public static long deleteFavorite(long id) {
+
+        String selection = DbContract.Favorite._ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(id) };
+        int deleted = db.delete(DbContract.Favorite.TABLE_NAME, selection, selectionArgs);
+
+        return deleted;
     }
 
     /**
@@ -143,8 +157,38 @@ public class Db {
                 DbContract.Station.SQL_JOIN_COUNTRY
         );
 
-        Cursor c = qb.query(db, projection, null, null, null, null, DbContract.Station.COLUMN_NAME_STATION);
+        Cursor c = qb.query(db, projection, null, null, null, null, DbContract.Favorite.COLUMN_NAME_ORDER);
 
         return new DbCursor(c);
+    }
+
+
+
+    public static long addData(Calendar date, Double tmp, Double dewpoint, String wnddir,
+                               Double wndspd, Double wndavg, Double wndgust, int humidity,
+                               Double pressure, int visibility, int nebulosity, int condition,
+                               long station) {
+        ContentValues values = new ContentValues();
+
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+        values.put(DbContract.Data.COLUMN_NAME_DATETIME, formatter.format(date.getTime()));
+        values.put(DbContract.Data.COLUMN_NAME_TMP, tmp);
+        values.put(DbContract.Data.COLUMN_NAME_DEWPOINT, dewpoint);
+        values.put(DbContract.Data.COLUMN_NAME_WINDDIR, wnddir);
+        values.put(DbContract.Data.COLUMN_NAME_WINDSPEED, wndspd);
+        values.put(DbContract.Data.COLUMN_NAME_WINDAVG, wndavg);
+        values.put(DbContract.Data.COLUMN_NAME_WINDGUST, wndgust);
+        values.put(DbContract.Data.COLUMN_NAME_HUMIDITY, humidity);
+        values.put(DbContract.Data.COLUMN_NAME_PRESSURE, pressure);
+        values.put(DbContract.Data.COLUMN_NAME_VISIBILITY, visibility);
+        values.put(DbContract.Data.COLUMN_NAME_NEBULOSITY, nebulosity);
+        values.put(DbContract.Data.COLUMN_NAME_CONDITION, condition);
+        values.put(DbContract.Data.COLUMN_NAME_STATION, station);
+
+
+        long id = db.insert(DbContract.Station.TABLE_NAME, null, values);
+
+        return id;
     }
 }

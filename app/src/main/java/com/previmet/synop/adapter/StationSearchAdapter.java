@@ -2,7 +2,6 @@ package com.previmet.synop.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,26 +9,27 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filterable;
 import android.widget.Filter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.previmet.synop.R;
-import com.previmet.synop.ui.Items;
 import com.previmet.synop.ui.Station;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class StationListAdapter extends ArrayAdapter<Station> implements Filterable {
-        private final String MY_DEBUG_TAG = "CustomerAdapter";
-        private ArrayList<Station> items;
-        private ArrayList<Station> itemsAll;
-        private ArrayList<Station> suggestions;
-        private int viewResourceId;
-        private Context context;
+/**
+ * Created by Vince on 28.12.2014.
+ */
+public class StationSearchAdapter extends ArrayAdapter<Station> {
+    private final String MY_DEBUG_TAG = "CustomerAdapter";
+    private ArrayList<Station> items;
+    private ArrayList<Station> itemsAll;
+    private ArrayList<Station> suggestions;
+    private int viewResourceId;
+    private Context context;
 
-        public StationListAdapter(Context context, int viewResourceId, ArrayList<Station> items) {
+    public StationSearchAdapter(Context context, int viewResourceId, ArrayList<Station> items) {
         super(context, viewResourceId, items);
         this.context = context;
         this.items = items;
@@ -42,7 +42,7 @@ public class StationListAdapter extends ArrayAdapter<Station> implements Filtera
 
         if (convertView == null) {
             LayoutInflater vi = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = vi.inflate(R.layout.station_list_item, parent, false);
+            convertView = vi.inflate(R.layout.station_list_item, null);
         }
 
         Station station = items.get(position);

@@ -6,11 +6,12 @@ import android.provider.BaseColumns;
  * Created by Vince on 20.12.2014.
  */
 public class DbContract {
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "SYNOP.sqlite";
     private static final String TEXT_TYPE = " TEXT";
     private static final String INTEGER_TYPE = " INTEGER";
     private static final String DECIMAL_TYPE = " REAL";
+    private static final String DATETIME_TYPE = " DATETIME";
     private static final String COMMA_SEP = ",";
 
     /**
@@ -87,6 +88,7 @@ public class DbContract {
      */
     public static abstract class Data implements BaseColumns {
         public static final String TABLE_NAME = "data";
+        public static final String COLUMN_NAME_DATETIME = "datetime";
         public static final String COLUMN_NAME_TMP = "temperature";
         public static final String COLUMN_NAME_DEWPOINT = "dewpoint";
         public static final String COLUMN_NAME_WINDDIR = "wnddir";
@@ -103,6 +105,7 @@ public class DbContract {
         public static final String SQL_CREATE_TABLE =
                 "CREATE TABLE " + TABLE_NAME + " (" +
                         _ID + " INTEGER PRIMARY KEY, " +
+                        COLUMN_NAME_DATETIME    + DATETIME_TYPE    + COMMA_SEP +
                         COLUMN_NAME_TMP         + DECIMAL_TYPE     + COMMA_SEP +
                         COLUMN_NAME_DEWPOINT    + DECIMAL_TYPE     + COMMA_SEP +
                         COLUMN_NAME_WINDDIR     + TEXT_TYPE        + COMMA_SEP +

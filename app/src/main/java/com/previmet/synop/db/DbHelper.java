@@ -305,8 +305,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
 
         // add default favorites stations
-        Db.addFavorite(1, idAigle);
-        Db.addFavorite(2, idBouveret);
+        Db.addFavorite(idAigle);
+        Db.addFavorite(idBouveret);
 
     }
 

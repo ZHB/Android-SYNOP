@@ -23,17 +23,132 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/main_content"
-                android:layout_width="match_parent"
+            <HorizontalScrollView
+                android:id="@+id/hsv"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_alignParentTop="true"
+                android:fillViewport="true"
+                android:measureAllChildren="false"
+                android:scrollbars="none" >
 
-                <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                <TableLayout
+                    android:id="@+id/main_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/data_date"
+                            android:text="09:00"
+                            android:layout_weight="1"
+                            android:background="#dcdcdc"
+                            android:textColor="#000000"
+                            android:padding="10dp"
+                            android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/data_tmp"
+                            android:text="-9.5"
+                            android:layout_weight="1"
+                            android:background="#dcdcdc"
+                            android:textColor="#000000"
+                            android:padding="10dp"
+                            android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/data_dewpoint"
+                            android:text="-10.6"
+                            android:layout_weight="1"
+                            android:background="#dcdcdc"
+                            android:textColor="#000000"
+                            android:padding="10dp"
+                            android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/data_wnddir"
+                            android:text="NNO"
+                            android:layout_weight="1"
+                            android:background="#dcdcdc"
+                            android:textColor="#000000"
+                            android:padding="10dp"
+                            android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/data_wndspd"
+                            android:text="3.7"
+                            android:layout_weight="1"
+                            android:background="#dcdcdc"
+                            android:textColor="#000000"
+                            android:padding="10dp"
+                            android:gravity="center"/>
+                        <TextView
+                            android:id="@+id/data_wndmean"
+                            android:text="5.6"
+                            android:layout_weight="1"
+                            android:background="#dcdcdc"
+                            android:textColor="#000000"
+                            android:padding="10dp"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/data_wndgust"
+                            android:text="9.3"
+                            android:layout_weight="1"
+                            android:background="#dcdcdc"
+                            android:textColor="#000000"
+                            android:padding="10dp"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/data_pressure"
+                            android:text="1038.4"
+                            android:layout_weight="1"
+                            android:background="#dcdcdc"
+                            android:textColor="#000000"
+                            android:padding="10dp"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/data_visibility"
+                            android:text="35"
+                            android:layout_weight="1"
+                            android:background="#dcdcdc"
+                            android:textColor="#000000"
+                            android:padding="10dp"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/data_nebulosity"
+                            android:text="0/8"
+                            android:layout_weight="1"
+                            android:background="#dcdcdc"
+                            android:textColor="#000000"
+                            android:padding="10dp"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/data_precipitation"
+                            android:text="0/1h"
+                            android:layout_weight="1"
+                            android:background="#dcdcdc"
+                            android:textColor="#000000"
+                            android:padding="10dp"
+                            android:gravity="center"/>
+
+                        <TextView
+                            android:id="@+id/data_condition"
+                            android:text="=="
+                            android:layout_weight="1"
+                            android:background="#dcdcdc"
+                            android:textColor="#000000"
+                            android:padding="10dp"
+                            android:gravity="center"/>
 
 
-            </LinearLayout>
+                        </TableRow>
+
+                </TableLayout>
+            </HorizontalScrollView>
+
 
         </LinearLayout>
 
