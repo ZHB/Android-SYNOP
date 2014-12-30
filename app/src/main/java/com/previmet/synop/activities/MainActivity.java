@@ -1,21 +1,16 @@
 package com.previmet.synop.activities;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -29,10 +24,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.previmet.synop.R;
@@ -41,16 +34,13 @@ import com.previmet.synop.adapter.StationSearchAdapter;
 import com.previmet.synop.db.Db;
 import com.previmet.synop.db.DbContract;
 import com.previmet.synop.db.DbCursor;
-import com.previmet.synop.fragments.Bookmark_Fragment;
 import com.previmet.synop.fragments.FavoritesFragment;
 import com.previmet.synop.fragments.MapFragment;
-import com.previmet.synop.fragments.Sales_Fragment;
 import com.previmet.synop.fragments.StationsFragment;
 import com.previmet.synop.ui.Items;
 import com.previmet.synop.ui.Station;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 
 public class MainActivity extends ActionBarActivity implements TextWatcher, AdapterView.OnItemClickListener {
@@ -325,7 +315,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
                 mapFragment = new MapFragment();
                 break;
             case 4:
-                fragment = new Bookmark_Fragment();
+                fragment = new FavoritesFragment();
                 break;
             default:
                 fragment = new FavoritesFragment();
