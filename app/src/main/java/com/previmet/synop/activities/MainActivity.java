@@ -178,8 +178,11 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
             // The Cursor is now set to the right position
             stationListItems.add(new Station(
                             sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_STATION)),
+                            sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_WMO)),
                             sCursor.getString(sCursor.getColumnIndex(DbContract.Country.COLUMN_NAME_COUNTRY)),
-                            sCursor.getInt(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_ELEVATION)))
+                            sCursor.getInt(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_ELEVATION)),
+                            sCursor.getDouble(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_LATITUDE)),
+                            sCursor.getDouble(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_LONGITUDE)))
             );
         }
 
@@ -301,6 +304,8 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
      */
     private void selectItem(int position) {
 
+        final Bundle bundle = new Bundle();
+
         Fragment fragment = null;
         SupportMapFragment mapFragment = null;
 
@@ -309,10 +314,16 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
                 fragment = new FavoritesFragment();
                 break;
             case 2:
+                bundle.putParcelableArrayList("stations_list", stationListItems);
+
                 fragment = new StationsFragment();
+                fragment.setArguments(bundle);
                 break;
             case 3:
+                bundle.putParcelableArrayList("stations_list", stationListItems);
+
                 mapFragment = new MapFragment();
+                mapFragment.setArguments(bundle);
                 break;
             case 4:
                 fragment = new FavoritesFragment();
@@ -321,8 +332,6 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
                 fragment = new FavoritesFragment();
                 break;
         }
-
-
 
         /*
          * Insert fragment into main content view

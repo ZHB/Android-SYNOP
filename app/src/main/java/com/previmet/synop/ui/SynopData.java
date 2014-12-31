@@ -12,19 +12,25 @@ public class SynopData {
     private double tmpMax;
     private double dpt;
     private int hr;
-    private double wndSpd;
-    private double wndAvg;
-    private double wndGust;
+    private String wndDir;
+    private String wndSpd;
+    private String wndAvg;
+    private String wndGust;
     private double prmsl;
     private double prmslTrend;
     private double sun;
 
 
-    public SynopData(String date, String time, double tmp, double dpt) {
+    public SynopData(String date, String time, double tmp, double dpt, int hr, String wndDir, String wndSpd, String wndAvg, String wndGust) {
         this.date = date;
         this.time = time;
         this.tmp = tmp;
         this.dpt = dpt;
+        this.hr = hr;
+        this.wndDir = wndDir;
+        this.wndSpd = wndSpd;
+        this.wndAvg = wndAvg;
+        this.wndGust = wndGust;
     }
 
     public String getDate() {
@@ -41,5 +47,26 @@ public class SynopData {
 
     public double getDpt() {
         return dpt;
+    }
+
+
+    public String getWndSpd() {
+        return wndSpd;
+    }
+
+    public String getWndDir() {
+        return wndDir;
+    }
+
+    public String getWndAvg() {
+        return wndAvg;
+    }
+
+    public String getWndGust() {
+        return wndGust;
+    }
+
+    public int getHr() {
+        return hr;
     }
 }

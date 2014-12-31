@@ -10,28 +10,40 @@ public class Station implements Parcelable {
 
     private long id;
     private String name;
+    private String wmo;
     private String country;
     private int elevation;
+    private double latitude;
+    private double longitude;
 
     // constructor that takes a Parcel and gives you an object populated with it's values
     // reading in the same order than parcel write
     public Station(Parcel in) {
         name = in.readString();
+        wmo = in.readString();
         country = in.readString();
         elevation = in.readInt();
+        latitude = in.readDouble();
+        longitude = in.readDouble();
     }
 
-    public Station(String name, String country, int elevation) {
+    public Station(String name, String wmo, String country, int elevation, double latitude, double longitude) {
         this.name = name;
+        this.wmo = wmo;
         this.country = country;
         this.elevation = elevation;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
-    public Station(long id, String name, String country, int elevation) {
+    public Station(long id, String name, String wmo, String country, int elevation, double latitude, double longitude) {
         this.id = id;
         this.name = name;
+        this.wmo = wmo;
         this.country = country;
         this.elevation = elevation;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public long getId() {
@@ -46,8 +58,24 @@ public class Station implements Parcelable {
         this.name = name;
     }
 
+    public String getWmo() {
+        return wmo;
+    }
+
+    public void setWmo(String wmo) {
+        this.wmo = wmo;
+    }
+
     public String getCountry() {
         return country;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
     }
 
     public void setCountry(String country) {
@@ -84,6 +112,7 @@ public class Station implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(name);
+        dest.writeString(wmo);
         dest.writeString(country);
         dest.writeInt(elevation);
     }

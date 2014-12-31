@@ -43,12 +43,22 @@ import java.util.ArrayList;
 public class MapFragment extends SupportMapFragment   {
 
 
-    GoogleMap googleMap;
+    private GoogleMap googleMap;
+    private ArrayList<Station> stationListItems;
 
     @Override
     public void onCreate(Bundle arg0) {
 
         super.onCreate(arg0);
+
+        /*
+        * Retrieve station object pass to the fragment
+        */
+        Bundle args = getArguments();
+
+        if (args != null && args.containsKey("stations_list")) {
+            stationListItems = args.getParcelableArrayList("stations_list");
+        }
     }
 
     @Override
@@ -115,20 +125,13 @@ public class MapFragment extends SupportMapFragment   {
      * Adds a marker to the map
      */
     private void addMarker(){
-
-        DbCursor sCursor = Db.getStations();
-
         /** Make sure that the map has been initialised **/
         if(null != googleMap){
 
-            while(sCursor.moveToNext()) {
-                // The Cursor is now set to the right position
-
+            for(Station s : stationListItems) {
                 googleMap.addMarker(new MarkerOptions()
-                                .position(
-                                        new LatLng(sCursor.getDouble(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_LATITUDE)),
-                                                   sCursor.getDouble(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_LONGITUDE))))
-                                .title(sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_STATION)))
+                                .position(new LatLng(s.getLatitude(),s.getLongitude()))
+                                .title(s.getName())
                                 .draggable(false)
                 );
             }

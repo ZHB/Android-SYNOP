@@ -35,7 +35,6 @@ public class StationsFragment extends Fragment {
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -50,6 +49,12 @@ public class StationsFragment extends Fragment {
         * create a new array list for our navigation drawer that will contain Items object.
         * Items are created with text and icons.
         */
+        Bundle args = getArguments();
+        if (args  != null && args.containsKey("stations_list")) {
+            stationListItems = args.getParcelableArrayList("stations_list");
+        }
+
+        /*
         stationListItems = new ArrayList<Station>();
 
         DbCursor sCursor = Db.getStations();
@@ -57,10 +62,12 @@ public class StationsFragment extends Fragment {
             // The Cursor is now set to the right position
             stationListItems.add(new Station(
                     sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_STATION)),
+                    sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_WMO)),
                     sCursor.getString(sCursor.getColumnIndex(DbContract.Country.COLUMN_NAME_COUNTRY)),
                     sCursor.getInt(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_ELEVATION)))
             );
         }
+        */
 
         //StationListAdapter adapter = new StationListAdapter(rootView.getContext(), stationListItems);
         StationListAdapter adapter = new StationListAdapter(rootView.getContext(), R.layout.station_list_item, stationListItems);
@@ -79,7 +86,6 @@ public class StationsFragment extends Fragment {
                 Intent intent = new Intent(view.getContext(), StationActivity.class);
                 intent.putExtra("station", station);
                 getActivity().startActivity(intent);
-                //getActivity().startActivityForResult(intent,111);
             }
         });
 

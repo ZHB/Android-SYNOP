@@ -4,64 +4,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!-- The main content view -->
-    <FrameLayout
-        android:id="@+id/content_station"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/headerbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+            <include layout="@layout/toolbar" />
+        </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/headerbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <include layout="@layout/toolbar" />
-
-            </LinearLayout>
-
-            <HorizontalScrollView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_content_station">
+            <!--<HorizontalScrollView
                 android:id="@+id/hsv"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:fillViewport="true"
                 android:measureAllChildren="false"
-                android:scrollbars="none" >
+                android:scrollbars="none" >-->
 
                 <ListView
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/list_synop_data"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="#fff"
                     android:choiceMode="singleChoice"
                     android:divider="@color/divider"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
+                    android:paddingTop="0dp"
+                    android:paddingBottom="0dp"
                     android:dividerHeight="0dp"
                     android:scrollbars="vertical"
                     android:fastScrollEnabled="false" />
 
-
-            </HorizontalScrollView>
-
+            <!--</HorizontalScrollView>-->
 
             <ProgressBar
                 android:id="@+id/progressBar1"
                 style="?android:attr/progressBarStyleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/button1"
-                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
                 android:indeterminateBehavior="repeat"
+                android:visibility="invisible"
                 android:indeterminateDuration="@android:integer/config_mediumAnimTime"
-                android:indeterminateOnly="true" />
+                android:indeterminateOnly="true"
+                android:focusableInTouchMode="false"
+                android:layout_gravity="center_horizontal" />
 
-        </LinearLayout>
-
-    </FrameLayout>
+        </RelativeLayout>
+    </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

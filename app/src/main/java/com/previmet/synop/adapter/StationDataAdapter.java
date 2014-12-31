@@ -46,10 +46,20 @@ public class StationDataAdapter extends ArrayAdapter<SynopData> {
             TextView sDate = (TextView) convertView.findViewById(R.id.data_date);
             TextView sTmp = (TextView) convertView.findViewById(R.id.data_tmp);
             TextView sDpt = (TextView) convertView.findViewById(R.id.data_dewpoint);
+            TextView sHr = (TextView) convertView.findViewById(R.id.data_hr);
+            TextView sWndDir = (TextView) convertView.findViewById(R.id.data_wnddir);
+            TextView sWndSpd = (TextView) convertView.findViewById(R.id.data_wndspd);
+            TextView sWndAvg = (TextView) convertView.findViewById(R.id.data_wndavg);
+            TextView sWndGust = (TextView) convertView.findViewById(R.id.data_wndgust);
 
             sDate.setText(station.getTime()+ ":00");
             sTmp.setText(Double.toString(station.getTmp()));
             sDpt.setText(Double.toString(station.getDpt()));
+            sHr.setText(Integer.toString(station.getHr()));
+            sWndDir.setText(station.getWndDir());
+            sWndSpd.setText(station.getWndSpd());
+            sWndAvg.setText(station.getWndAvg());
+            sWndGust.setText(station.getWndGust());
         }
         return convertView;
     }

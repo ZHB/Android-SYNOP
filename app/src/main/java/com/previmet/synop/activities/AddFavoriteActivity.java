@@ -69,10 +69,13 @@ public class AddFavoriteActivity extends ActionBarActivity {
         while(sCursor.moveToNext()) {
             // The Cursor is now set to the right position
             stationListItems.add(new Station(
-                            sCursor.getLong(sCursor.getColumnIndex(DbContract.Station._ID)),
-                            sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_STATION)),
-                            sCursor.getString(sCursor.getColumnIndex(DbContract.Country.COLUMN_NAME_COUNTRY)),
-                            sCursor.getInt(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_ELEVATION)))
+                    sCursor.getLong(sCursor.getColumnIndex(DbContract.Station._ID)),
+                    sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_STATION)),
+                    sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_WMO)),
+                    sCursor.getString(sCursor.getColumnIndex(DbContract.Country.COLUMN_NAME_COUNTRY)),
+                    sCursor.getInt(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_ELEVATION)),
+                    sCursor.getDouble(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_LATITUDE)),
+                    sCursor.getDouble(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_LONGITUDE)))
             );
         }
 
