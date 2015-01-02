@@ -95,9 +95,6 @@ public class FavoritesFragment extends Fragment implements FavoriteListener {
 
         });
 
-
-
-
         return rootView;
     }
 
