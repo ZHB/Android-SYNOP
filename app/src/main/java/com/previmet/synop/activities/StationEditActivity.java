@@ -22,6 +22,7 @@ public class StationEditActivity extends ActionBarActivity {
     private EditText editStationElevation;
     private int mCountError = 0;
     private MenuItem mMenuValidate;
+    static final int EDIT_STATION = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +124,7 @@ public class StationEditActivity extends ActionBarActivity {
 
             // return updated station object
             Intent returnIntent = new Intent();
-            returnIntent.putExtra("edited_station",station);
+            returnIntent.putExtra("add_edit_station",station);
             setResult(RESULT_OK, returnIntent);
 
             this.finish();

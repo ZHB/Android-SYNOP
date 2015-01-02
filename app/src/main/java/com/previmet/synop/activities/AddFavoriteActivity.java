@@ -103,8 +103,8 @@ public class AddFavoriteActivity extends ActionBarActivity {
 
                 // stop the activity
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("added_station",station);
-                setResult(RESULT_OK,returnIntent);
+                returnIntent.putExtra("add_edit_station", station);
+                setResult(RESULT_OK, returnIntent);
 
                 finish();
             }
@@ -152,10 +152,8 @@ public class AddFavoriteActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         // close the current activity
-        //this.finish();
         finish();
 
         return super.onOptionsItemSelected(item);
-
     }
 }

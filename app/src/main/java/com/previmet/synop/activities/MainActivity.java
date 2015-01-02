@@ -159,6 +159,8 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         mDrawerContainer.setOnItemClickListener(new DrawerItemClickListener());
 
 
+
+
         //Set width of drawer
         DrawerLayout.LayoutParams lp = (DrawerLayout.LayoutParams) mDrawerContainer.getLayoutParams();
         lp.width = calculateDrawerWidth();

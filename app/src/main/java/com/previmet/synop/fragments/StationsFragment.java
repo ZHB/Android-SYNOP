@@ -117,7 +117,7 @@ public class StationsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         // get the station
-        Station s = data.getExtras().getParcelable("edited_station");
+        Station s = data.getExtras().getParcelable("add_edit_station");
 
         // update station object at given position
         stationListItems.set(item_postion, s);

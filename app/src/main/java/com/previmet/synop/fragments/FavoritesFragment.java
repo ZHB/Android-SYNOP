@@ -44,7 +44,7 @@ public class FavoritesFragment extends Fragment implements FavoriteListener {
     private RecyclerView recList;
     private View rootView;
     private ActionMode mActionMode;
-    private static int RESULT_OK = 1;
+    static final int ADD_FAVORITE = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,7 +91,7 @@ public class FavoritesFragment extends Fragment implements FavoriteListener {
             @Override
             public void onClick(View arg0) {
                 Intent intent = new Intent(rootView.getContext(), AddFavoriteActivity.class);
-                startActivityForResult(intent, RESULT_OK);
+                startActivityForResult(intent, ADD_FAVORITE);
             }
 
         });
@@ -103,9 +103,16 @@ public class FavoritesFragment extends Fragment implements FavoriteListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(resultCode == RESULT_OK) {
+
+        //Toast.makeText(getActivity(), resultCode ,Toast.LENGTH_LONG).show();
+
+        if (data == null) {return;}
+
+        // Check which request we're responding to
+        if (requestCode == ADD_FAVORITE) {
+
             // get the station
-            Station s = data.getExtras().getParcelable("added_station");
+            Station s = data.getExtras().getParcelable("add_edit_station");
             stationListItems.add(s);
 
             // notifiy the adapter from added station
