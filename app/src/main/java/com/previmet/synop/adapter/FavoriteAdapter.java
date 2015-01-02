@@ -110,12 +110,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Contac
         @Override
         public boolean onLongClick(View v) {
 
-
             if (mItemLongClickListener != null) {
                 mItemLongClickListener.onItemPressed(v, getPosition());
             }
 
-            return false;
+            return true;
         }
     }
 }

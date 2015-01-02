@@ -45,6 +45,8 @@
     <string name="action_view_month">Monthly view</string>
     <string name="action_view_year">Yearly view</string>
     <string name="cab_item_edit">Edit</string>
+    <string name="cab_item_delete">Delete</string>
+
 
 
 

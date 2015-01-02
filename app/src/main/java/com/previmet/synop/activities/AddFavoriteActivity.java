@@ -30,6 +30,7 @@ import com.previmet.synop.adapter.StationSearchAdapter;
 import com.previmet.synop.db.Db;
 import com.previmet.synop.db.DbContract;
 import com.previmet.synop.db.DbCursor;
+import com.previmet.synop.fragments.FavoritesFragment;
 import com.previmet.synop.ui.Station;
 
 import java.util.ArrayList;
@@ -39,12 +40,8 @@ import java.util.Observer;
 
 public class AddFavoriteActivity extends ActionBarActivity {
 
-
-    private List<FavoriteListener> listeners = new ArrayList<FavoriteListener>();
-    private AutoCompleteTextView myAutoComplete;
     private ArrayList<Station> stationListItems;
     private StationListAdapter adapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,15 +101,11 @@ public class AddFavoriteActivity extends ActionBarActivity {
                 // add the favorite to database
                 long fId = Db.addFavorite(station.getId());
 
-                // Notify everybody that may be interested.
-                for (FavoriteListener hl : listeners) {
-                    hl.favoriteAdded(1000);
-                }
-
-
-                Toast.makeText(getApplicationContext(), "Please, verify your internet connection" + listeners.size(), Toast.LENGTH_SHORT).show();
-
                 // stop the activity
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("added_station",station);
+                setResult(RESULT_OK,returnIntent);
+
                 finish();
             }
         });
@@ -162,13 +155,6 @@ public class AddFavoriteActivity extends ActionBarActivity {
         this.finish();
 
         return super.onOptionsItemSelected(item);
-
-    }
-
-    public void addListener(FavoriteListener toAdd) {
-        listeners.add(toAdd);
-
-
 
     }
 }
