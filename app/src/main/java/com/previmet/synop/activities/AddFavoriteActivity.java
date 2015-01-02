@@ -152,7 +152,8 @@ public class AddFavoriteActivity extends ActionBarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         // close the current activity
-        this.finish();
+        //this.finish();
+        finish();
 
         return super.onOptionsItemSelected(item);
 

@@ -1,5 +1,6 @@
 package com.previmet.synop.activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -115,7 +116,15 @@ public class StationEditActivity extends ActionBarActivity {
             String name = editStationName.getText().toString();
             String elevation = editStationElevation.getText().toString();
 
-            Db.updateStation(station.getId(), name, elevation);
+            station.setName(name);
+            station.setElevation(Integer.parseInt(elevation));
+
+            Db.updateStation(station.getId(), station.getName(), Integer.toString(station.getElevation()));
+
+            // return updated station object
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("edited_station",station);
+            setResult(RESULT_OK, returnIntent);
 
             this.finish();
 

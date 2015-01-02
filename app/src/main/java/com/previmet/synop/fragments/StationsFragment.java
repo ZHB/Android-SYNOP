@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.previmet.synop.R;
+import com.previmet.synop.activities.AddFavoriteActivity;
 import com.previmet.synop.activities.StationActivity;
 import com.previmet.synop.activities.StationEditActivity;
 import com.previmet.synop.adapter.StationListAdapter;
@@ -39,6 +40,8 @@ public class StationsFragment extends Fragment {
     private View rootView;
     private StationListAdapter adapter;
     private ActionMode mActionMode;
+    private static int RESULT_OK = 11;
+    private int item_postion;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,6 +112,20 @@ public class StationsFragment extends Fragment {
     }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // get the station
+        Station s = data.getExtras().getParcelable("edited_station");
+
+        // update station object at given position
+        stationListItems.set(item_postion, s);
+
+        // notifiy the adapter from added station
+        adapter.notifyDataSetChanged();
+    }
+
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 
         // Called when the action mode is created; startActionMode() was called
@@ -135,12 +152,12 @@ public class StationsFragment extends Fragment {
             switch (item.getItemId()) {
                 case R.id.cab_item_edit:
 
-                    int item_postion=Integer.parseInt(mode.getTag().toString());
+                    item_postion = Integer.parseInt(mode.getTag().toString());
                     Station s = (Station) stationListContainer.getAdapter().getItem(item_postion);
 
                     Intent intent = new Intent(rootView.getContext(), StationEditActivity.class);
                     intent.putExtra("station", s);
-                    getActivity().startActivity(intent);
+                    startActivityForResult(intent, RESULT_OK);
 
                     //shareCurrentItem();
                     mode.finish(); // Action picked, so close the CAB

@@ -48,6 +48,9 @@ public class StationActivity extends ActionBarActivity {
 
     private String currentDate;
 
+    private SimpleDateFormat mSdfTitle = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat mSdfSql = new SimpleDateFormat("EEEE dd MMMM yyyy");
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +66,8 @@ public class StationActivity extends ActionBarActivity {
         // get current date
         Calendar c = Calendar.getInstance();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        currentDate = sdf.format(c.getTime());
+        //SimpleDateFormat mSdfSql = new SimpleDateFormat("yyyy-MM-dd");
+        currentDate = mSdfSql.format(c.getTime());
 
 
 
@@ -79,8 +82,18 @@ public class StationActivity extends ActionBarActivity {
             //toolbar.setTitle("Station name");
             //toolbar.setSubtitle("Lundi 2 nov. 2014 à 15:00" + station.getName());
 
+
+
+
+            Calendar titleDate  = Calendar.getInstance();
+            try {
+                titleDate.setTime(mSdfSql.parse(currentDate));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
             getSupportActionBar().setTitle(station.getName());
-            getSupportActionBar().setSubtitle(currentDate);
+            getSupportActionBar().setSubtitle(mSdfSql.format(titleDate.getTime()));
         }
 
 
@@ -96,14 +109,14 @@ public class StationActivity extends ActionBarActivity {
 
 
                 // get current date
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 Calendar now  = Calendar.getInstance();
                 try {
-                    now.setTime(df.parse(currentDate));
+                    now.setTime(mSdfSql.parse(currentDate));
 
                     // substract one day
                     now.add(Calendar.DATE, 1);
-                    currentDate = df.format(now.getTime());
+                    currentDate = mSdfSql.format(now.getTime());
 
                     getSupportActionBar().setSubtitle(currentDate);
 
@@ -118,14 +131,14 @@ public class StationActivity extends ActionBarActivity {
             public void onSwipeRight() {
 
                 // get current date
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 Calendar now  = Calendar.getInstance();
                 try {
-                    now.setTime(df.parse(currentDate));
+                    now.setTime(mSdfSql.parse(currentDate));
 
                     // substract one day
                     now.add(Calendar.DATE, -1);
-                    currentDate = df.format(now.getTime());
+                    currentDate = mSdfSql.format(now.getTime());
 
                     getSupportActionBar().setSubtitle(currentDate);
 
@@ -256,9 +269,9 @@ public class StationActivity extends ActionBarActivity {
                             new SynopData(
                                     objectInArray.getString("rDATE"),
                                     objectInArray.getString("rTIME"),
-                                    objectInArray.getDouble("rTMP"),
-                                    objectInArray.getDouble("rDPT"),
-                                    objectInArray.getInt("rHR"),
+                                    objectInArray.getString("rTMP"),
+                                    objectInArray.getString("rDPT"),
+                                    objectInArray.getString("rHR"),
                                     objectInArray.getString("rWNDDIR"),
                                     objectInArray.getString("rWNDSPD"),
                                     objectInArray.getString("rWNDAVG"),

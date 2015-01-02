@@ -4,27 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
+    <!--
     <item
     android:id="@+id/action_datepicker"
     android:icon="@drawable/ic_event_white"
     android:title="Choose date"
     app:showAsAction="always|collapseActionView"
-    />
-
-    <item android:id="@+id/action_view_day"
-        android:title="@string/action_view_day"
-        app:showAsAction="never" />
-
-    <item android:id="@+id/action_view_week"
-        android:title="@string/action_view_week"
-        app:showAsAction="never" />
-
-    <item android:id="@+id/action_view_month"
-        android:title="@string/action_view_month"
-        app:showAsAction="never" />
-
-    <item android:id="@+id/action_view_year"
-        android:title="@string/action_view_year"
-        app:showAsAction="never" />
-
+    />-->
 </menu>

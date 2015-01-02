@@ -7,11 +7,11 @@ public class SynopData {
 
     private String date;
     private String time;
-    private double tmp;
+    private String tmp;
     private double tmpMin;
     private double tmpMax;
-    private double dpt;
-    private int hr;
+    private String dpt;
+    private String hr;
     private String wndDir;
     private String wndSpd;
     private String wndAvg;
@@ -21,7 +21,7 @@ public class SynopData {
     private double sun;
 
 
-    public SynopData(String date, String time, double tmp, double dpt, int hr, String wndDir, String wndSpd, String wndAvg, String wndGust) {
+    public SynopData(String date, String time, String tmp, String dpt, String hr, String wndDir, String wndSpd, String wndAvg, String wndGust) {
         this.date = date;
         this.time = time;
         this.tmp = tmp;
@@ -41,11 +41,11 @@ public class SynopData {
         return time;
     }
 
-    public double getTmp() {
+    public String getTmp() {
         return tmp;
     }
 
-    public double getDpt() {
+    public String getDpt() {
         return dpt;
     }
 
@@ -66,7 +66,7 @@ public class SynopData {
         return wndGust;
     }
 
-    public int getHr() {
+    public String getHr() {
         return hr;
     }
 }
