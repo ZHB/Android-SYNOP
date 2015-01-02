@@ -1,16 +1,20 @@
 package com.previmet.synop.activities;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,13 +28,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.previmet.synop.R;
 import com.previmet.synop.adapter.DrawerAdapter;
-import com.previmet.synop.adapter.StationSearchAdapter;
+import com.previmet.synop.adapter.SearchSuggestionAdapter;
 import com.previmet.synop.db.Db;
 import com.previmet.synop.db.DbContract;
 import com.previmet.synop.db.DbCursor;
@@ -53,6 +58,9 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
+    private Menu menu;
+    //private List<String> mSearchSuggestions = new ArrayList<String>();
+    private ArrayList<Station> mSearchSuggestions = new ArrayList<Station>();
 
     private AutoCompleteTextView myAutoComplete;
     private ArrayList<Station> stationListItems;
@@ -166,6 +174,8 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         myAutoComplete = (AutoCompleteTextView) viewBugReport.findViewById(R.id.autoComplete_searchStation);
 
 
+        TextView footer_settings = (TextView) findViewById(R.id.footer_settings);
+
 
          /*
             * create a new array list for our navigation drawer that will contain Items object.
@@ -177,6 +187,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         while(sCursor.moveToNext()) {
             // The Cursor is now set to the right position
             stationListItems.add(new Station(
+                            sCursor.getLong(sCursor.getColumnIndex(DbContract.Station._ID)),
                             sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_STATION)),
                             sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_WMO)),
                             sCursor.getString(sCursor.getColumnIndex(DbContract.Country.COLUMN_NAME_COUNTRY)),
@@ -185,21 +196,9 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
                             sCursor.getDouble(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_LONGITUDE)))
             );
         }
-
-        if(myAutoComplete != null) {
-            Toast.makeText(getApplicationContext(), "Autocomplete is NOT NULL", Toast.LENGTH_SHORT).show();
-            myAutoComplete.addTextChangedListener(this);
-
-            StationSearchAdapter adapter = new StationSearchAdapter(this, R.layout.station_list_item, stationListItems);
-            myAutoComplete.setAdapter(adapter);
-
-            myAutoComplete.setOnItemClickListener(this);
-        } else {
-            Toast.makeText(getApplicationContext(), "Autocomplete is null", Toast.LENGTH_SHORT).show();
-        }
-
-
     }
+
+
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -239,16 +238,71 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        //View v = menu.findItem(R.id.action_search).getActionView(); // Get access to a View associated with example item
-        //myAutoComplete = (AutoCompleteTextView) v.findViewById(R.id.autoComplete_searchStation);
+        this.menu = menu;
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+
+            SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+            SearchView search = (SearchView) menu.findItem(R.id.action_search).getActionView();
+
+            search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
+
+            search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+                @Override
+                public boolean onQueryTextSubmit(String s) {return false;}
+
+                @Override
+                public boolean onQueryTextChange(String query) {
+
+
+                    loadData(query);
+
+                    return true;
+                }
+
+            });
+        }
 
 
         return true;
     }
 
+
+    private void loadData(String query) {
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+
+            // get suggestions from database
+            Cursor cursor = Db.getStations(query);
+
+            // create an array with searched stations
+            mSearchSuggestions.clear();
+            while(cursor.moveToNext()) {
+                mSearchSuggestions.add(new Station(
+                        cursor.getLong(cursor.getColumnIndex(DbContract.Station._ID)),
+                        cursor.getString(cursor.getColumnIndex(DbContract.Station.COLUMN_NAME_STATION)),
+                        cursor.getString(cursor.getColumnIndex(DbContract.Station.COLUMN_NAME_WMO)),
+                        cursor.getString(cursor.getColumnIndex(DbContract.Country.COLUMN_NAME_COUNTRY)),
+                        cursor.getInt(cursor.getColumnIndex(DbContract.Station.COLUMN_NAME_ELEVATION)),
+                        cursor.getDouble(cursor.getColumnIndex(DbContract.Station.COLUMN_NAME_LATITUDE)),
+                        cursor.getDouble(cursor.getColumnIndex(DbContract.Station.COLUMN_NAME_LONGITUDE))));
+            }
+
+
+            SearchManager sm = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+            final SearchView sv = (SearchView) menu.findItem(R.id.action_search).getActionView();
+            sv.setSearchableInfo(sm.getSearchableInfo(getComponentName()));
+
+            sv.setSuggestionsAdapter(new SearchSuggestionAdapter(this, cursor, mSearchSuggestions));
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -399,5 +453,9 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void onClick(View v) {
+        startActivity(new Intent(this, SettingsActivity.class));
     }
 }

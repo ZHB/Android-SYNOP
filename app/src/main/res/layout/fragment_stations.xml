@@ -3,16 +3,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/listitem_background">
     <ListView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/list_stations"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff"
         android:choiceMode="singleChoice"
         android:divider="@color/divider"
         android:paddingTop="8dp"
+        android:listSelector="@android:color/transparent"
         android:paddingBottom="8dp"
         android:dividerHeight="1dp"
         android:scrollbars="vertical"

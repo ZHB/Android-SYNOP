@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.previmet.synop.activities.StationEditActivity">
+
+    <item
+        android:id="@+id/mnu_station_edit_validate"
+        android:icon="@drawable/ic_done_white"
+        android:title="Done"
+        android:visible="false"
+        app:showAsAction="always|collapseActionView"
+        />
+</menu>

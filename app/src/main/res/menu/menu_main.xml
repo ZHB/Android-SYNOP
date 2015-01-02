@@ -2,11 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
 
+    <!-- app:actionLayout="@layout/search_custom" -->
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search_white"
         android:title="Search"
-        app:actionLayout="@layout/search_custom"
+
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="android.support.v7.widget.SearchView"
         />

@@ -2,30 +2,23 @@ package com.previmet.synop.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Filterable;
 import android.widget.Filter;
-import android.widget.ImageView;
+import android.widget.Filterable;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.previmet.synop.R;
-import com.previmet.synop.ui.Items;
 import com.previmet.synop.ui.Station;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 
-public class StationListAdapter extends ArrayAdapter<Station> implements Filterable {
-    private final String MY_DEBUG_TAG = "CustomerAdapter";
+public class StationListAdapterNoFilter extends ArrayAdapter<Station> {
     private ArrayList<Station> items;
     private ArrayList<Station> itemsAll;
     private ArrayList<Station> suggestions;
@@ -33,7 +26,7 @@ public class StationListAdapter extends ArrayAdapter<Station> implements Filtera
     private Context context;
     private HashMap<Integer, Boolean> mSelection = new HashMap<Integer, Boolean>();
 
-    public StationListAdapter(Context context, int viewResourceId, ArrayList<Station> items) {
+    public StationListAdapterNoFilter(Context context, int viewResourceId, ArrayList<Station> items) {
         super(context, viewResourceId, items);
         this.context = context;
         this.items = items;
@@ -62,6 +55,10 @@ public class StationListAdapter extends ArrayAdapter<Station> implements Filtera
             sName.setText(station.getName());
             sComplementary.setText(station.getCountry() + " - " + elevation);
 
+
+            if (mSelection.get(position) != null && mSelection.get(position)) {
+                convertView.setBackgroundColor(context.getResources().getColor(android.R.color.holo_blue_light));// this is a selected position so make it red
+            }
         }
         return convertView;
     }
@@ -87,48 +84,4 @@ public class StationListAdapter extends ArrayAdapter<Station> implements Filtera
         mSelection = new HashMap<Integer, Boolean>();
         notifyDataSetChanged();
     }
-
-
-
-    @Override
-    public Filter getFilter() {
-        return nameFilter;
-    }
-
-    Filter nameFilter = new Filter() {
-        @Override
-        public String convertResultToString(Object resultValue) {
-            String str = ((Station)(resultValue)).getName();
-            return str;
-        }
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            if(constraint != null) {
-                suggestions.clear();
-                for (Station customer : itemsAll) {
-                    if(customer.getName().toLowerCase().startsWith(constraint.toString().toLowerCase())){
-                        suggestions.add(customer);
-                    }
-                }
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = suggestions;
-                filterResults.count = suggestions.size();
-                return filterResults;
-            } else {
-                return new FilterResults();
-            }
-        }
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            ArrayList<Station> filteredList = (ArrayList<Station>) results.values;
-            if(results != null && results.count > 0) {
-                clear();
-                for (Station c : filteredList) {
-                    add(c);
-                }
-                notifyDataSetChanged();
-            }
-        }
-    };
-
 }

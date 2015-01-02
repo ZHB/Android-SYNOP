@@ -21,13 +21,6 @@
     <color name="accent_color_light">@color/color_orange_A100</color>
     <color name="accent_color_dark">@color/color_orange_A400</color>
 
-    <!-- Drawer Article Color -->
-    <color name="color_apps">#0277BD</color>
-    <color name="color_sales">#FF5722</color>
-    <color name="color_blog">#4CAF50</color>
-    <color name="color_bookmark">#FFC107</color>
-    <color name="color_community">#F44336</color>
-
     <!-- Navigation Drawer color -->
     <color name="color_navigation_drawer_item_selected">#1A000000</color>
 

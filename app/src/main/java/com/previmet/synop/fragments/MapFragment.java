@@ -1,18 +1,15 @@
 package com.previmet.synop.fragments;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.renderscript.Script;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,29 +19,27 @@ import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 
-import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.previmet.synop.R;
-import com.previmet.synop.activities.MainActivity;
-import com.previmet.synop.adapter.StationListAdapter;
-import com.previmet.synop.db.Db;
-import com.previmet.synop.db.DbContract;
-import com.previmet.synop.db.DbCursor;
+import com.previmet.synop.activities.StationActivity;
 import com.previmet.synop.ui.Station;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class MapFragment extends SupportMapFragment   {
-
-
-    private GoogleMap googleMap;
+    private GoogleMap mGoogleMap;
     private ArrayList<Station> stationListItems;
+    private HashMap<String, Station> mExtraMarkerContent = new HashMap<String, Station>();
+    private static final double DEFAULT_LATITUDE = 46.4594;
+    private static final double DEFAULT_LONGITUDE = 4.7356;
+    private static final float DEFAULT_ZOOM = 5.0f;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -90,9 +85,10 @@ public class MapFragment extends SupportMapFragment   {
             addMarker();
 
             // Zoom the map
-            CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(46.4594, 4.7356)).zoom(5.0f).build();
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)).zoom(DEFAULT_ZOOM).build();
             CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-            googleMap.moveCamera(cameraUpdate);
+            mGoogleMap.moveCamera(cameraUpdate);
         }
     }
 
@@ -105,15 +101,68 @@ public class MapFragment extends SupportMapFragment   {
          * may be thrown when initialising the map
          */
         try {
-            if(null == googleMap){
-                googleMap = getMap();
+            if(null == mGoogleMap){
+                mGoogleMap = getMap();
+
+                mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                    @Override
+                    public View getInfoWindow(Marker marker) {
+                        return null;
+                    }
+
+                    @Override
+                    public View getInfoContents(Marker marker) {
+
+                        View view = getActivity().getLayoutInflater()
+                                .inflate(R.layout.google_maps_infowindows, null);
+
+                        TextView markerStation = (TextView) view.findViewById(R.id.marker_station);
+                        TextView markerCountry = (TextView) view.findViewById(R.id.marker_country);
+
+                        // pluralisation for station elevation
+                        Resources res = getResources();
+                        String elevation = res.getQuantityString(R.plurals.stationElevationUnit,
+                                mExtraMarkerContent.get(marker.getId()).getElevation(),
+                                mExtraMarkerContent.get(marker.getId()).getElevation());
+
+
+                        // set text to the layout
+                        markerStation.setText(marker.getTitle());
+                        markerCountry.setText(mExtraMarkerContent
+                                .get(marker.getId()).getCountry() + " - " + elevation);
+
+                        return view;
+                    }
+                });
+
+                mGoogleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                    @Override
+                    public boolean onMarkerClick(com.google.android.gms.maps.model.Marker marker) {
+                        marker.showInfoWindow();
+                        return true;
+                    }
+                });
+
+                mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+
+                        // get station object from HashMap, then pass it to new intent
+                        Station station = mExtraMarkerContent.get(marker.getId());
+
+                        Intent intent = new Intent(getActivity(), StationActivity.class);
+                        intent.putExtra("station", station);
+                        startActivity(intent);
+                    }
+                });
 
                 /**
                  * If the map is still null after attempted initialisation,
                  * show an error to the user
                  */
-                if(null == googleMap) {
-                    Toast.makeText(getActivity().getApplicationContext(),"Error creating map",Toast.LENGTH_SHORT).show();
+                if(null == mGoogleMap) {
+                    Toast.makeText(getActivity()
+                            .getApplicationContext(),"Error creating map",Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (NullPointerException exception){
@@ -122,19 +171,24 @@ public class MapFragment extends SupportMapFragment   {
     }
 
     /**
-     * Adds a marker to the map
+     * Add marker to map and create an HashMap of theses markers with station
+     * object content.
      */
     private void addMarker(){
         /** Make sure that the map has been initialised **/
-        if(null != googleMap){
+        if(null != mGoogleMap) {
+            for (Station s : stationListItems) {
+                // Create your marker like normal, nothing changes
+                Marker marker =  mGoogleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(s.getLatitude(), s.getLongitude()))
+                        .title(s.getName())
+                        .draggable(false)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker)));
 
-            for(Station s : stationListItems) {
-                googleMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(s.getLatitude(),s.getLongitude()))
-                                .title(s.getName())
-                                .draggable(false)
-                );
+                // Save the entiere object into the hashMap
+                mExtraMarkerContent.put(marker.getId(), s);
             }
         }
     }
+
 }

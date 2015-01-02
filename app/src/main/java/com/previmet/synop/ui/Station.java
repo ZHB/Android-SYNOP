@@ -19,6 +19,7 @@ public class Station implements Parcelable {
     // constructor that takes a Parcel and gives you an object populated with it's values
     // reading in the same order than parcel write
     public Station(Parcel in) {
+        id = in.readLong();
         name = in.readString();
         wmo = in.readString();
         country = in.readString();
@@ -111,6 +112,7 @@ public class Station implements Parcelable {
      */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
         dest.writeString(name);
         dest.writeString(wmo);
         dest.writeString(country);

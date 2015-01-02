@@ -1,5 +1,6 @@
 package com.previmet.synop.fragments;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Outline;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.previmet.synop.FavoriteListener;
 import com.previmet.synop.R;
 import com.previmet.synop.activities.AddFavoriteActivity;
 import com.previmet.synop.activities.StationActivity;
@@ -28,14 +30,16 @@ import com.previmet.synop.ui.Station;
 import java.util.ArrayList;
 
 
-public class FavoritesFragment extends Fragment {
+public class FavoritesFragment extends Fragment implements FavoriteListener {
 
     private TextView hourlyListView;
     private ArrayList<Station> stationListItems;
     private FavoriteAdapter fa;
+    private AddFavoriteActivity addFav;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 
@@ -77,7 +81,6 @@ public class FavoritesFragment extends Fragment {
         fabFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-
                 Intent intent = new Intent(rootView.getContext(), AddFavoriteActivity.class);
                 getActivity().startActivity(intent);
             }
@@ -120,5 +123,10 @@ public class FavoritesFragment extends Fragment {
                 }
 
         );
+    }
+
+    @Override
+    public void favoriteAdded(int position) {
+        Toast.makeText(getActivity(),"Listener : " + position,Toast.LENGTH_SHORT).show();
     }
 }

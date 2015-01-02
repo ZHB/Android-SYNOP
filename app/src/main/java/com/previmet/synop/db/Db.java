@@ -114,6 +114,47 @@ public class Db {
         return new DbCursor(c);
     }
 
+    public static DbCursor getStations(String q){
+        String[] projection = {
+                "s." + DbContract.Station._ID,
+                DbContract.Station.COLUMN_NAME_STATION,
+                DbContract.Station.COLUMN_NAME_WMO,
+                DbContract.Station.COLUMN_NAME_ELEVATION,
+                DbContract.Station.COLUMN_NAME_LATITUDE,
+                DbContract.Station.COLUMN_NAME_LONGITUDE,
+                DbContract.Country.COLUMN_NAME_COUNTRY
+        };
+
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+        qb.setTables(
+                DbContract.Station.TABLE_NAME + " s " +
+                        DbContract.Station.SQL_JOIN_COUNTRY
+        );
+
+
+        String selection = DbContract.Station.COLUMN_NAME_STATION + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(q + "%") };
+
+        Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, DbContract.Station.COLUMN_NAME_STATION);
+
+
+        return new DbCursor(c);
+    }
+
+    public static long updateStation(long id, String name, String elevation) {
+        ContentValues values = new ContentValues();
+
+        values.put(DbContract.Station.COLUMN_NAME_STATION, name);
+        values.put(DbContract.Station.COLUMN_NAME_ELEVATION, elevation);
+
+        String selection = DbContract.Station._ID + " LIKE ?";
+        String[] selectionArgs = { String.valueOf(id) };
+
+        int updated = db.update(DbContract.Station.TABLE_NAME, values, selection, selectionArgs);
+
+        return updated;
+    }
+
     public static long addFavorite(long station) {
         ContentValues values = new ContentValues();
         values.put(DbContract.Favorite.COLUMN_NAME_ORDER, 1000);
