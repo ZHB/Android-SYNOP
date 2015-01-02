@@ -93,7 +93,7 @@ public class StationActivity extends ActionBarActivity {
             }
 
             getSupportActionBar().setTitle(station.getName());
-            getSupportActionBar().setSubtitle(mSdfSql.format(titleDate.getTime()));
+            getSupportActionBar().setSubtitle(mSdfTitle.format(titleDate.getTime()));
         }
 
 
