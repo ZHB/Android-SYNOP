@@ -48,8 +48,8 @@ public class StationActivity extends ActionBarActivity {
 
     private String currentDate;
 
-    private SimpleDateFormat mSdfTitle = new SimpleDateFormat("yyyy-MM-dd");
-    private SimpleDateFormat mSdfSql = new SimpleDateFormat("EEEE dd MMMM yyyy");
+    private SimpleDateFormat mSdfTitle = new SimpleDateFormat("EEEE dd MMMM yyyy");
+    private SimpleDateFormat mSdfSql = new SimpleDateFormat("yyyy-MM-dd");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
