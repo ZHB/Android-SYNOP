@@ -36,14 +36,14 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/edit_station_name"
                     android:id="@+id/edit_station_name_label"
-                    android:textColor="@color/secondary"
+                    android:textColor="@color/text_secondary"
                     android:layout_column="0" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/edit_station_name_txt"
-                    android:textColor="@color/text"
+                    android:textColor="@color/text_primary"
                     android:text="name"
                     android:inputType="text" />
 
@@ -53,14 +53,14 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/edit_station_elevation"
                     android:id="@+id/edit_station_elevation_label"
-                    android:textColor="@color/secondary"
+                    android:textColor="@color/text_secondary"
                     android:layout_column="0" />
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/edit_station_elevation_txt"
-                    android:textColor="@color/text"
+                    android:textColor="@color/text_primary"
                     android:text="538"
                     android:inputType="number" />
 

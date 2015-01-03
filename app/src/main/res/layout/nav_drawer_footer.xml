@@ -25,7 +25,7 @@
             android:paddingLeft="@dimen/drawer_left"
             android:paddingRight="@dimen/drawer_right"
             android:text="Settings"
-            android:textColor="@color/text"
+            android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:onClick="onClick"
             android:clickable="true"

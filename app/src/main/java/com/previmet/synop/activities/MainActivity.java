@@ -140,17 +140,17 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         LayoutInflater inflater = getLayoutInflater();
-        final ViewGroup header = (ViewGroup) inflater.inflate(R.layout.header,
+        final ViewGroup ndHeader = (ViewGroup) inflater.inflate(R.layout.nav_drawer_header,
                 mDrawerContainer, false);
 
-        final ViewGroup footer = (ViewGroup) inflater.inflate(R.layout.footer,
+        final ViewGroup ndFooter = (ViewGroup) inflater.inflate(R.layout.nav_drawer_footer,
                 mDrawerContainer, false);
 
 
-        // add header view to the navigation drawer container
-        mDrawerContainer.addHeaderView(header, null, false); // true = clickable
-        // add footer view to the navigation drawer container
-        mDrawerContainer.addFooterView(footer, null, true); // true = clickable
+        // add ndHeader view to the navigation drawer container
+        mDrawerContainer.addHeaderView(ndHeader, null, false); // true = clickable
+        // add navFooter view to the navigation drawer container
+        mDrawerContainer.addFooterView(ndFooter, null, false); // true = clickable
 
 
         // Set the adapter for the list view

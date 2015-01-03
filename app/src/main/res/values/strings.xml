@@ -49,10 +49,11 @@
 
 
 
-
-
     <string name="edit_station_name">Station name</string>
     <string name="edit_station_elevation">Elevation</string>
+
+    <string name="no_internet_connection">Please, verify your internet connection</string>
+
 
 
 

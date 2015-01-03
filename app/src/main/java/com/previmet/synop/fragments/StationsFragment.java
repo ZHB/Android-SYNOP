@@ -33,14 +33,12 @@ import java.util.ArrayList;
 
 public class StationsFragment extends Fragment {
 
-    private String[] stationList;
     private ArrayList<Station> stationListItems;
     private ListView stationListContainer;
-    private TextView hourlyListView;
     private View rootView;
     private StationListAdapter adapter;
     private ActionMode mActionMode;
-    private static int RESULT_OK = 11;
+    private static int EDIT_FAVORITE = 11;
     private int item_postion;
 
     @Override
@@ -98,7 +96,6 @@ public class StationsFragment extends Fragment {
         stationListContainer.setOnItemClickListener(new ListView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Station station = new Station("Name", "Country", 500);
 
                 Station station = stationListItems.get(position);
 
@@ -116,14 +113,19 @@ public class StationsFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        // get the station
-        Station s = data.getExtras().getParcelable("add_edit_station");
+        if (data == null) {return;}
 
-        // update station object at given position
-        stationListItems.set(item_postion, s);
+        // Check which request we're responding to
+        if (requestCode == EDIT_FAVORITE) {
+            // get the station
+            Station s = data.getExtras().getParcelable("add_edit_station");
 
-        // notifiy the adapter from added station
-        adapter.notifyDataSetChanged();
+            // update station object at given position
+            stationListItems.set(item_postion, s);
+
+            // notifiy the adapter from added station
+            adapter.notifyDataSetChanged();
+        }
     }
 
     private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
@@ -157,7 +159,7 @@ public class StationsFragment extends Fragment {
 
                     Intent intent = new Intent(rootView.getContext(), StationEditActivity.class);
                     intent.putExtra("station", s);
-                    startActivityForResult(intent, RESULT_OK);
+                    startActivityForResult(intent, EDIT_FAVORITE);
 
                     //shareCurrentItem();
                     mode.finish(); // Action picked, so close the CAB

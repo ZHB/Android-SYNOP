@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Station name"
             android:layout_gravity="center_vertical"
-            android:textColor="@color/text" />
+            android:textColor="@color/text_primary" />
 
         <TextView
             android:id="@+id/station_complementary"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="Suisse - 332 mètres"
-            android:textColor="@color/secondary" />
+            android:textColor="@color/text_secondary" />
 
     </LinearLayout>
 </LinearLayout>

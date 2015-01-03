@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp"
-    android:textColor="@color/text"
+    android:textColor="@color/text_primary"
     android:imeOptions="actionSearch"
     android:inputType="text">
     <requestFocus/>

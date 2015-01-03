@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Genève-Cointrin"
-        android:textColor="@color/text"
+        android:textColor="@color/text_primary"
         android:textStyle="bold" />
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_marginLeft="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/secondary"
+        android:textColor="@color/text_secondary"
         android:textStyle="bold" />
 
 </LinearLayout>

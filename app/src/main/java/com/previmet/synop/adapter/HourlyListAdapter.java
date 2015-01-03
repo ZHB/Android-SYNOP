@@ -44,7 +44,7 @@ public class HourlyListAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = mInflater.inflate(R.layout.drawer_list_item, parent, false);
+            convertView = mInflater.inflate(R.layout.nav_drawer_list_item, parent, false);
         }
 
         ImageView image = (ImageView) convertView.findViewById(R.id.item_icon);

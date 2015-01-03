@@ -2,10 +2,12 @@ package com.previmet.synop.activities;
 
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -19,6 +21,10 @@ import android.widget.Toast;
 import com.previmet.synop.OnSwipeTouchListener;
 import com.previmet.synop.R;
 import com.previmet.synop.adapter.StationDataAdapter;
+import com.previmet.synop.ui.CelsiusTmp;
+import com.previmet.synop.ui.FahrenheitTmp;
+import com.previmet.synop.ui.KnotsWnd;
+import com.previmet.synop.ui.MphWnd;
 import com.previmet.synop.ui.Station;
 import com.previmet.synop.ui.SynopData;
 
@@ -38,18 +44,22 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class StationActivity extends ActionBarActivity {
 
-    private ProgressBar spinner;
-    private ArrayList<SynopData> synopDataItem;
-    private ListView synopDataContainer;
+    private ProgressBar mSpinner;
+    private ArrayList<SynopData> mSynopDataItem;
+    private ListView mSynopDataContainer;
     private Station station;
-
-    private String currentDate;
+    private String mCurrentDate;
+    private String mPreferenceTmp;
+    private String mPreferenceWnd;
 
     private SimpleDateFormat mSdfTitle = new SimpleDateFormat("EEEE dd MMMM yyyy");
     private SimpleDateFormat mSdfSql = new SimpleDateFormat("yyyy-MM-dd");
+
+    private final static String REST_URL = "http://www.prevision-meteo.ch/data/synop";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,14 +72,16 @@ public class StationActivity extends ActionBarActivity {
         // check for our toolbar xml layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        // get preferences for units
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(StationActivity.this);
+        mPreferenceTmp = pref.getString("units_temperature_list", "0");
+        mPreferenceWnd = pref.getString("units_wind_list", "0");
 
         // get current date
         Calendar c = Calendar.getInstance();
 
         //SimpleDateFormat mSdfSql = new SimpleDateFormat("yyyy-MM-dd");
-        currentDate = mSdfSql.format(c.getTime());
-
-
+        mCurrentDate = mSdfSql.format(c.getTime());
 
         // redefine default action bar with new toolbar
         if (toolbar != null) {
@@ -79,15 +91,9 @@ public class StationActivity extends ActionBarActivity {
             // display the back button
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            //toolbar.setTitle("Station name");
-            //toolbar.setSubtitle("Lundi 2 nov. 2014 à 15:00" + station.getName());
-
-
-
-
             Calendar titleDate  = Calendar.getInstance();
             try {
-                titleDate.setTime(mSdfSql.parse(currentDate));
+                titleDate.setTime(mSdfSql.parse(mCurrentDate));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -99,58 +105,23 @@ public class StationActivity extends ActionBarActivity {
 
         callJson();
 
-
         ListView mcs = (ListView) findViewById(R.id.list_synop_data);
 
 
         mcs.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
             @Override
             public void onSwipeLeft() throws ParseException {
-
-
-                // get current date
-                //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                Calendar now  = Calendar.getInstance();
-                try {
-                    now.setTime(mSdfSql.parse(currentDate));
-
-                    // substract one day
-                    now.add(Calendar.DATE, 1);
-                    currentDate = mSdfSql.format(now.getTime());
-
-                    getSupportActionBar().setSubtitle(currentDate);
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
+                addSubNDay(1);
                 callJson();
             }
 
             @Override
             public void onSwipeRight() {
-
-                // get current date
-                //SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                Calendar now  = Calendar.getInstance();
-                try {
-                    now.setTime(mSdfSql.parse(currentDate));
-
-                    // substract one day
-                    now.add(Calendar.DATE, -1);
-                    currentDate = mSdfSql.format(now.getTime());
-
-                    getSupportActionBar().setSubtitle(currentDate);
-
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-
+                addSubNDay(-1);
                 callJson();
             }
         });
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -179,22 +150,42 @@ public class StationActivity extends ActionBarActivity {
 
     }
 
+    private void addSubNDay(int day) {
+        Calendar now  = Calendar.getInstance();
+        try {
+
+            Date curDate = mSdfSql.parse(mCurrentDate);
+
+            now.setTime(curDate);
+
+            // substract N day
+            now.add(Calendar.DATE, day);
+            mCurrentDate = mSdfSql.format(now.getTime());
+
+            getSupportActionBar().setSubtitle(mSdfTitle.format(now.getTime()));
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void callJson() {
         // check mobile connexion status
         if(isConnected()){
-            spinner = (ProgressBar)findViewById(R.id.progressBar1);
+            mSpinner = (ProgressBar)findViewById(R.id.progressBar1);
 
             // retrieve JSON data on an async task
-            new HttpAsyncTask().execute( "http://www.prevision-meteo.ch/data/synop/" + currentDate + "/" + station.getWmo() );
+            new HttpAsyncTask().execute( REST_URL + "/" + mCurrentDate + "/" + station.getWmo() );
         }
         else{
-            Toast.makeText(getApplicationContext(), "Please, verify your internet connection", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         }
     }
+
     /**
      * Verifiy if the mobile has an active internet connection
      *
-     * @return
+     * @return true if connected
      */
     private boolean isConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -207,10 +198,13 @@ public class StationActivity extends ActionBarActivity {
         BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
         String line = "";
         String result = "";
-        while((line = bufferedReader.readLine()) != null)
+
+        while((line = bufferedReader.readLine()) != null) {
             result += line;
+        }
 
         inputStream.close();
+
         return result;
     }
 
@@ -219,15 +213,15 @@ public class StationActivity extends ActionBarActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            spinner.setVisibility(View.VISIBLE);
+            mSpinner.setVisibility(View.VISIBLE);
         }
 
         @Override
         protected String doInBackground(String... urls) {
             InputStream inputStream = null;
             String result = "";
-            try {
 
+            try {
                 // create HttpClient
                 HttpClient httpclient = new DefaultHttpClient();
 
@@ -238,10 +232,11 @@ public class StationActivity extends ActionBarActivity {
                 inputStream = httpResponse.getEntity().getContent();
 
                 // convert inputstream to string
-                if(inputStream != null)
+                if(inputStream != null) {
                     result = convertInputStreamToString(inputStream);
-                else
+                } else {
                     result = "Did not work!";
+                }
 
             } catch (Exception e) {
                 Log.d("InputStream", e.getLocalizedMessage());
@@ -249,13 +244,16 @@ public class StationActivity extends ActionBarActivity {
 
             return result;
         }
-        // onPostExecute displays the results of the AsyncTask.
+
+        /*
+         * onPostExecute displays the results of the AsyncTask.
+         */
         @Override
         protected void onPostExecute(String result) {
-            spinner.setVisibility(View.GONE);
+            mSpinner.setVisibility(View.GONE);
 
-            synopDataItem = new ArrayList<SynopData>();
-            synopDataContainer = (ListView)findViewById(R.id.list_synop_data);
+            mSynopDataItem = new ArrayList<SynopData>();
+            mSynopDataContainer = (ListView)findViewById(R.id.list_synop_data);
 
             try {
                 JSONObject json = new JSONObject(result.trim());
@@ -265,28 +263,38 @@ public class StationActivity extends ActionBarActivity {
                 {
                     JSONObject objectInArray = synop.getJSONObject(i);
 
-                    synopDataItem.add(
-                            new SynopData(
-                                    objectInArray.getString("rDATE"),
-                                    objectInArray.getString("rTIME"),
-                                    objectInArray.getString("rTMP"),
-                                    objectInArray.getString("rDPT"),
-                                    objectInArray.getString("rHR"),
-                                    objectInArray.getString("rWNDDIR"),
-                                    objectInArray.getString("rWNDSPD"),
-                                    objectInArray.getString("rWNDAVG"),
-                                    objectInArray.getString("rWNDGUST")
-                            )
-                    );
+                    SynopData sData = new SynopData(
+                                            objectInArray.getString("rDATE"),
+                                            objectInArray.getString("rTIME"),
+                                            objectInArray.getString("rTMP"),
+                                            objectInArray.getString("rDPT"),
+                                            objectInArray.getString("rHR"),
+                                            objectInArray.getString("rWNDDIR"),
+                                            objectInArray.getString("rWNDSPD"),
+                                            objectInArray.getString("rWNDAVG"),
+                                            objectInArray.getString("rWNDGUST")
+                                    );
+
+                    // set units
+                    if(mPreferenceTmp.equals("1")) {
+                        sData.setUnitTmpBehavior(new FahrenheitTmp());
+                    }
+
+                    if(mPreferenceWnd.equals("1")) {
+                        sData.setUnitWndBehavior(new KnotsWnd());
+                    } else if(mPreferenceWnd.equals("2")) {
+                        sData.setUnitWndBehavior(new MphWnd());
+                    }
+
+
+                    mSynopDataItem.add(sData);
                 }
 
-                //Toast.makeText(getBaseContext(), "Length: " + synopDataItem.size(), Toast.LENGTH_LONG).show();
-
-                //StationListAdapter adapter = new StationListAdapter(rootView.getContext(), stationListItems);
-                StationDataAdapter adapter = new StationDataAdapter(StationActivity.this, R.layout.station_synop_data_item, synopDataItem);
+                // call adapter to populate data
+                StationDataAdapter adapter = new StationDataAdapter(StationActivity.this, R.layout.station_synop_data_item, mSynopDataItem);
 
                 // Set the adapter for the list view
-                synopDataContainer.setAdapter(adapter);
+                mSynopDataContainer.setAdapter(adapter);
 
             } catch (JSONException e) {
                 e.printStackTrace();

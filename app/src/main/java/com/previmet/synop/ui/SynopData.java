@@ -20,6 +20,9 @@ public class SynopData {
     private double prmslTrend;
     private double sun;
 
+    UnitTmpBehavior unitTmpBehavior;
+    UnitWndBehavior unitWndBehavior;
+
 
     public SynopData(String date, String time, String tmp, String dpt, String hr, String wndDir, String wndSpd, String wndAvg, String wndGust) {
         this.date = date;
@@ -31,6 +34,18 @@ public class SynopData {
         this.wndSpd = wndSpd;
         this.wndAvg = wndAvg;
         this.wndGust = wndGust;
+
+        // set default temperature to celcius
+        this.unitTmpBehavior = new CelsiusTmp();
+        this.unitWndBehavior = new KmhWnd();
+    }
+
+    public void setUnitTmpBehavior(UnitTmpBehavior unitTmpBehavior) {
+        this.unitTmpBehavior = unitTmpBehavior;
+    }
+
+    public void setUnitWndBehavior(UnitWndBehavior unitWndBehavior) {
+        this.unitWndBehavior = unitWndBehavior;
     }
 
     public String getDate() {
@@ -42,6 +57,15 @@ public class SynopData {
     }
 
     public String getTmp() {
+
+        try {
+            double cTmp = Double.parseDouble(tmp);
+
+            tmp = String.valueOf(unitTmpBehavior.convertTmp(cTmp));
+        } catch (NumberFormatException e) {
+            return tmp;
+        }
+
         return tmp;
     }
 
@@ -51,6 +75,15 @@ public class SynopData {
 
 
     public String getWndSpd() {
+
+        try {
+            double cWndSpd = Double.parseDouble(wndSpd);
+
+            wndSpd = String.valueOf(unitWndBehavior.convertWnd(cWndSpd));
+        } catch (NumberFormatException e) {
+            return wndSpd;
+        }
+
         return wndSpd;
     }
 
@@ -59,10 +92,27 @@ public class SynopData {
     }
 
     public String getWndAvg() {
+
+        try {
+            double cWndSpd = Double.parseDouble(wndAvg);
+
+            wndAvg = String.valueOf(unitWndBehavior.convertWnd(cWndSpd));
+        } catch (NumberFormatException e) {
+            return wndAvg;
+        }
+
         return wndAvg;
     }
 
     public String getWndGust() {
+        try {
+            double cWndSpd = Double.parseDouble(wndGust);
+
+            wndGust = String.valueOf(unitWndBehavior.convertWnd(cWndSpd));
+        } catch (NumberFormatException e) {
+            return wndGust;
+        }
+
         return wndGust;
     }
 
