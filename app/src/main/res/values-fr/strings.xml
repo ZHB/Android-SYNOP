@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SYNOP</string>
+    <string name="drawer_open">Ouvrir</string>
+    <string name="drawer_close">Fermer</string>
+    <string name="title_activity_search_results">Recherche</string>
+    <string name="title_activity_station_edit">Editer une station</string>
+    <string name="title_activity_station">Station</string>
+    <string name="title_activity_add_favorite">Ajouter un favoris</string>
+
+    <string-array name="drawer_titles">
+        <item>Favoris</item>
+        <item>Liste</item>
+        <item>Carte</item>
+    </string-array>
+
+    <array name="drawer_icons">
+        <item>@drawable/ic_favorite_grey600</item>
+        <item>@drawable/ic_list_grey600</item>
+        <item>@drawable/ic_map_grey600</item>
+    </array>
+    <array name="drawer_icons_active">
+        <item>@drawable/ic_favorite_black</item>
+        <item>@drawable/ic_list_black</item>
+        <item>@drawable/ic_map_black</item>
+    </array>
+
+    <string-array name="footer_titles">
+        <item>Préférences</item>
+    </string-array>
+
+    <!-- station list -->
+    <plurals name="stationElevationUnit">
+        <item quantity="one">%d mètre</item>
+        <item quantity="other">%d mètres</item>
+    </plurals>
+
+    <string name="action_settings">Préférences</string>
+    <string name="cab_item_edit">Editer</string>
+    <string name="cab_item_delete">Supprimer</string>
+
+
+
+    <string name="edit_station_name">Nom de la station</string>
+    <string name="edit_station_elevation">Altitude</string>
+
+    <string name="no_internet_connection">Veuillez vérifier votre connexion à internet</string>
+
+</resources>

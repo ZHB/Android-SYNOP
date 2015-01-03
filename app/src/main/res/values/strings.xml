@@ -28,22 +28,16 @@
 
     <string-array name="footer_titles">
         <item>Settings</item>
-        <item>Feedback</item>
     </string-array>
 
     <!-- station list -->
     <plurals name="stationElevationUnit">
-        <item quantity="one">%d mètre</item>
-        <item quantity="other">%d mètres</item>
+        <item quantity="one">%d meter</item>
+        <item quantity="other">%d meters</item>
     </plurals>
 
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="action_view_day">Daily view</string>
-    <string name="action_view_week">Weekly view</string>
-    <string name="action_view_month">Monthly view</string>
-    <string name="action_view_year">Yearly view</string>
     <string name="cab_item_edit">Edit</string>
     <string name="cab_item_delete">Delete</string>
 

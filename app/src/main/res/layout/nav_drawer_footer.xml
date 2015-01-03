@@ -24,7 +24,7 @@
             android:ellipsize="end"
             android:paddingLeft="@dimen/drawer_left"
             android:paddingRight="@dimen/drawer_right"
-            android:text="Settings"
+            android:text="@string/action_settings"
             android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:onClick="onClick"
