@@ -133,7 +133,7 @@ public class Db {
 
 
         String selection = DbContract.Station.COLUMN_NAME_STATION + " LIKE ?";
-        String[] selectionArgs = { String.valueOf(q + "%") };
+        String[] selectionArgs = { String.valueOf("%" + q + "%") };
 
         Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, DbContract.Station.COLUMN_NAME_STATION);
 

@@ -305,7 +305,13 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
                 @Override
                 public boolean onSuggestionClick(int position)
                 {
-                    Toast.makeText(MainActivity.this, "Position: " +  mSearchSuggestions.get(position).getName(), Toast.LENGTH_SHORT).show();
+                    Station station = mSearchSuggestions.get(position);
+
+                    Intent intent = new Intent(getApplicationContext(), StationActivity.class);
+                    intent.putExtra("station", station);
+                    startActivity(intent);
+
+
                     sv.clearFocus();
 
                     return true;
