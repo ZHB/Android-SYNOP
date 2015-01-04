@@ -5,7 +5,7 @@
     <string name="drawer_open">Ouvrir</string>
     <string name="drawer_close">Fermer</string>
     <string name="title_activity_search_results">Recherche</string>
-    <string name="title_activity_station_edit">Editer une station</string>
+    <string name="title_activity_station_edit">Editer</string>
     <string name="title_activity_station">Station</string>
     <string name="title_activity_add_favorite">Ajouter un favoris</string>
 
@@ -44,6 +44,8 @@
 
     <string name="edit_station_name">Nom de la station</string>
     <string name="edit_station_elevation">Altitude</string>
+    <string name="edit_station_name_error">Le nom de la station ne doit pas être vide</string>
+    <string name="edit_station_elevation_error">L\'altitude ne doit pas être vide</string>
 
     <string name="no_internet_connection">Veuillez vérifier votre connexion à internet</string>
 

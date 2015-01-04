@@ -42,7 +42,7 @@ public class StationEditActivity extends ActionBarActivity {
 
             // display the back button
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setTitle("Edit");
+            getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_station_edit));
         }
 
         // load default data into edit texts
@@ -58,7 +58,7 @@ public class StationEditActivity extends ActionBarActivity {
             @Override public void validate(TextView textView, String text) {
                 if(text.length() < 1) {
                     mCountError++;
-                    editStationName.setError("UserName Should not be blank");
+                    editStationName.setError(getResources().getString(R.string.edit_station_name_error));
                 }
 
                 if(text.length() >= 1 && mCountError > 0) {
@@ -73,7 +73,7 @@ public class StationEditActivity extends ActionBarActivity {
             @Override public void validate(TextView textView, String text) {
                 if(text.length() < 1) {
                     mCountError++;
-                    editStationElevation.setError("UserName Should not be blank");
+                    editStationElevation.setError(getResources().getString(R.string.edit_station_elevation_error));
                 }
 
                 if(text.length() >= 1 && mCountError > 0) {

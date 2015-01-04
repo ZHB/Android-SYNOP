@@ -299,6 +299,23 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
             sv.setSearchableInfo(sm.getSearchableInfo(getComponentName()));
 
             sv.setSuggestionsAdapter(new SearchSuggestionAdapter(this, cursor, mSearchSuggestions));
+
+            sv.setOnSuggestionListener(new SearchView.OnSuggestionListener()
+            {
+                @Override
+                public boolean onSuggestionClick(int position)
+                {
+                    Toast.makeText(MainActivity.this, "Position: " +  mSearchSuggestions.get(position).getName(), Toast.LENGTH_SHORT).show();
+                    sv.clearFocus();
+
+                    return true;
+                }
+                @Override
+                public boolean onSuggestionSelect(int position)
+                {
+                    return false;
+                }
+            });
         }
     }
 

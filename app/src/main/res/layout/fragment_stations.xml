@@ -16,7 +16,9 @@
         android:paddingBottom="8dp"
         android:dividerHeight="1dp"
         android:scrollbars="vertical"
+        android:scrollbarSize="10dp"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:fastScrollEnabled="true"
-        android:fastScrollAlwaysVisible="true" />
+        android:scrollbarThumbVertical="@drawable/scrollbar"
+ />
 </LinearLayout>
