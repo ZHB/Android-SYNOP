@@ -277,7 +277,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 
             // get suggestions from database
-            Cursor cursor = Db.getStations(query);
+            Cursor cursor = Db.searchStationByName(query);
 
             // create an array with searched stations
             mSearchSuggestions.clear();

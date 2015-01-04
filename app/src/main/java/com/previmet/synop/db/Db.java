@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 
 import java.sql.Date;
+import java.text.Normalizer;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
@@ -114,7 +115,7 @@ public class Db {
         return new DbCursor(c);
     }
 
-    public static DbCursor getStations(String q){
+    public static DbCursor searchStationByName(String q){
         String[] projection = {
                 "s." + DbContract.Station._ID,
                 DbContract.Station.COLUMN_NAME_STATION,
@@ -130,6 +131,7 @@ public class Db {
                 DbContract.Station.TABLE_NAME + " s " +
                         DbContract.Station.SQL_JOIN_COUNTRY
         );
+
 
 
         String selection = DbContract.Station.COLUMN_NAME_STATION + " LIKE ?";
