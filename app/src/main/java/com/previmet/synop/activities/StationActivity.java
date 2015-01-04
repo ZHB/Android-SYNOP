@@ -21,12 +21,11 @@ import android.widget.Toast;
 import com.previmet.synop.OnSwipeTouchListener;
 import com.previmet.synop.R;
 import com.previmet.synop.adapter.StationDataAdapter;
-import com.previmet.synop.ui.CelsiusTmp;
-import com.previmet.synop.ui.FahrenheitTmp;
-import com.previmet.synop.ui.KnotsWnd;
-import com.previmet.synop.ui.MphWnd;
+import com.previmet.synop.ui.synop.FahrenheitTmp;
+import com.previmet.synop.ui.synop.KnotsWnd;
+import com.previmet.synop.ui.synop.MphWnd;
 import com.previmet.synop.ui.Station;
-import com.previmet.synop.ui.SynopData;
+import com.previmet.synop.ui.synop.SynopData;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;

@@ -1,4 +1,4 @@
-package com.previmet.synop.ui;
+package com.previmet.synop.ui.synop;
 
 /**
  * Created by Vince on 03.01.2015.

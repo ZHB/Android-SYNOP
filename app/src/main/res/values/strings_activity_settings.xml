@@ -2,21 +2,22 @@
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
+    <string name="pref_title_unit">Units</string>
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
-    <string name="pref_title_units_temperature">Temperature units</string>
+    <string name="pref_title_units_temperature">Temperature</string>
     <string-array name="pref_units_temperature_list_titles">
-        <item>Degré Celsius</item>
-        <item>Degré Fahrenheit</item>
+        <item>Celsius degrees</item>
+        <item>Fahrenheit degrees</item>
     </string-array>
     <string-array name="pref_units_temperature_list_values">
         <item>0</item>
         <item>1</item>
     </string-array>
 
-    <string name="pref_title_units_wind">Wind units</string>
+    <string name="pref_title_units_wind">Wind</string>
     <string-array name="pref_units_wind_list_titles">
         <item>Km/h</item>
         <item>Knots</item>

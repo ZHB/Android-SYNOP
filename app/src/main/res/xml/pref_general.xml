@@ -3,24 +3,26 @@
     <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
          dismiss it. -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
-    <ListPreference
-        android:key="units_temperature_list"
-        android:title="@string/pref_title_units_temperature"
-        android:defaultValue="0"
-        android:entries="@array/pref_units_temperature_list_titles"
-        android:entryValues="@array/pref_units_temperature_list_values"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        />
+    <PreferenceCategory android:title="@string/pref_title_unit">
+        <ListPreference
+            android:key="units_temperature_list"
+            android:title="@string/pref_title_units_temperature"
+            android:defaultValue="0"
+            android:entries="@array/pref_units_temperature_list_titles"
+            android:entryValues="@array/pref_units_temperature_list_values"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            />
 
-    <ListPreference
-        android:key="units_wind_list"
-        android:title="@string/pref_title_units_wind"
-        android:defaultValue="0"
-        android:entries="@array/pref_units_wind_list_titles"
-        android:entryValues="@array/pref_units_wind_list_values"
-        android:negativeButtonText="@null"
-        android:positiveButtonText="@null"
-        />
+        <ListPreference
+            android:key="units_wind_list"
+            android:title="@string/pref_title_units_wind"
+            android:defaultValue="0"
+            android:entries="@array/pref_units_wind_list_titles"
+            android:entryValues="@array/pref_units_wind_list_values"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            />
+    </PreferenceCategory>
 
 </PreferenceScreen>

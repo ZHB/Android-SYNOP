@@ -1,4 +1,4 @@
-package com.previmet.synop.ui;
+package com.previmet.synop.ui.synop;
 
 /**
  * Created by Vince on 30.12.2014.
@@ -70,6 +70,15 @@ public class SynopData {
     }
 
     public String getDpt() {
+
+        try {
+            double cDpt = Double.parseDouble(dpt);
+
+            dpt = String.valueOf(unitTmpBehavior.convertTmp(cDpt));
+        } catch (NumberFormatException e) {
+            return dpt;
+        }
+
         return dpt;
     }
 
