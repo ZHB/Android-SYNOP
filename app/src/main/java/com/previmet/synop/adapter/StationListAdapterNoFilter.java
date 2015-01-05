@@ -6,8 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.previmet.synop.R;
@@ -76,10 +74,12 @@ public class StationListAdapterNoFilter extends ArrayAdapter<Station> {
     public Set<Integer> getCurrentCheckedPosition() {
         return mSelection.keySet();
     }
+
     public void removeSelection(int position) {
         mSelection.remove(position);
         notifyDataSetChanged();
     }
+
     public void clearSelection() {
         mSelection = new HashMap<Integer, Boolean>();
         notifyDataSetChanged();

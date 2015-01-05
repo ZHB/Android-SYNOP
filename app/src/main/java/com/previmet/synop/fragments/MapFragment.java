@@ -18,7 +18,6 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -33,13 +32,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class MapFragment extends SupportMapFragment   {
-    private GoogleMap mGoogleMap;
-    private ArrayList<Station> stationListItems;
-    private HashMap<String, Station> mExtraMarkerContent = new HashMap<String, Station>();
+public class MapFragment extends SupportMapFragment {
     private static final double DEFAULT_LATITUDE = 46.4594;
     private static final double DEFAULT_LONGITUDE = 4.7356;
     private static final float DEFAULT_ZOOM = 5.0f;
+    private GoogleMap mGoogleMap;
+    private ArrayList<Station> stationListItems;
+    private HashMap<String, Station> mExtraMarkerContent = new HashMap<String, Station>();
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -76,7 +75,7 @@ public class MapFragment extends SupportMapFragment   {
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
 
         // display a connectivity error message if needed
-        if(status != ConnectionResult.SUCCESS){
+        if (status != ConnectionResult.SUCCESS) {
             Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, getActivity(), 10);
             dialog.show();
         } else {
@@ -95,13 +94,13 @@ public class MapFragment extends SupportMapFragment   {
     /**
      * Initialises the mapview
      */
-    private void createMapView(){
+    private void createMapView() {
         /**
          * Catch the null pointer exception that
          * may be thrown when initialising the map
          */
         try {
-            if(null == mGoogleMap){
+            if (null == mGoogleMap) {
                 mGoogleMap = getMap();
 
                 mGoogleMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
@@ -160,12 +159,12 @@ public class MapFragment extends SupportMapFragment   {
                  * If the map is still null after attempted initialisation,
                  * show an error to the user
                  */
-                if(null == mGoogleMap) {
+                if (null == mGoogleMap) {
                     Toast.makeText(getActivity()
-                            .getApplicationContext(),"Error creating map",Toast.LENGTH_SHORT).show();
+                            .getApplicationContext(), "Error creating map", Toast.LENGTH_SHORT).show();
                 }
             }
-        } catch (NullPointerException exception){
+        } catch (NullPointerException exception) {
             Log.e("mapApp", exception.toString());
         }
     }
@@ -174,12 +173,12 @@ public class MapFragment extends SupportMapFragment   {
      * Add marker to map and create an HashMap of theses markers with station
      * object content.
      */
-    private void addMarker(){
+    private void addMarker() {
         /** Make sure that the map has been initialised **/
-        if(null != mGoogleMap) {
+        if (null != mGoogleMap) {
             for (Station s : stationListItems) {
                 // Create your marker like normal, nothing changes
-                Marker marker =  mGoogleMap.addMarker(new MarkerOptions()
+                Marker marker = mGoogleMap.addMarker(new MarkerOptions()
                         .position(new LatLng(s.getLatitude(), s.getLongitude()))
                         .title(s.getName())
                         .draggable(false)

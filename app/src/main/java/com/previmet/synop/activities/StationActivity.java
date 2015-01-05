@@ -21,10 +21,10 @@ import android.widget.Toast;
 import com.previmet.synop.OnSwipeTouchListener;
 import com.previmet.synop.R;
 import com.previmet.synop.adapter.StationDataAdapter;
+import com.previmet.synop.ui.Station;
 import com.previmet.synop.ui.synop.FahrenheitTmp;
 import com.previmet.synop.ui.synop.KnotsWnd;
 import com.previmet.synop.ui.synop.MphWnd;
-import com.previmet.synop.ui.Station;
 import com.previmet.synop.ui.synop.SynopData;
 
 import org.apache.http.HttpResponse;
@@ -47,6 +47,7 @@ import java.util.Date;
 
 public class StationActivity extends ActionBarActivity {
 
+    private final static String REST_URL = "http://www.prevision-meteo.ch/data/synop";
     private ProgressBar mSpinner;
     private ArrayList<SynopData> mSynopDataItem;
     private ListView mSynopDataContainer;
@@ -54,11 +55,22 @@ public class StationActivity extends ActionBarActivity {
     private String mCurrentDate;
     private String mPreferenceTmp;
     private String mPreferenceWnd;
-
     private SimpleDateFormat mSdfTitle = new SimpleDateFormat("EEEE dd MMMM yyyy");
     private SimpleDateFormat mSdfSql = new SimpleDateFormat("yyyy-MM-dd");
 
-    private final static String REST_URL = "http://www.prevision-meteo.ch/data/synop";
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+
+        while ((line = bufferedReader.readLine()) != null) {
+            result += line;
+        }
+
+        inputStream.close();
+
+        return result;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +102,7 @@ public class StationActivity extends ActionBarActivity {
             // display the back button
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-            Calendar titleDate  = Calendar.getInstance();
+            Calendar titleDate = Calendar.getInstance();
             try {
                 titleDate.setTime(mSdfSql.parse(mCurrentDate));
             } catch (ParseException e) {
@@ -130,7 +142,7 @@ public class StationActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
@@ -150,7 +162,7 @@ public class StationActivity extends ActionBarActivity {
     }
 
     private void addSubNDay(int day) {
-        Calendar now  = Calendar.getInstance();
+        Calendar now = Calendar.getInstance();
         try {
 
             Date curDate = mSdfSql.parse(mCurrentDate);
@@ -170,13 +182,12 @@ public class StationActivity extends ActionBarActivity {
 
     private void callJson() {
         // check mobile connexion status
-        if(isConnected()){
-            mSpinner = (ProgressBar)findViewById(R.id.progressBar1);
+        if (isConnected()) {
+            mSpinner = (ProgressBar) findViewById(R.id.progressBar1);
 
             // retrieve JSON data on an async task
-            new HttpAsyncTask().execute( REST_URL + "/" + mCurrentDate + "/" + station.getWmo() );
-        }
-        else{
+            new HttpAsyncTask().execute(REST_URL + "/" + mCurrentDate + "/" + station.getWmo());
+        } else {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.no_internet_connection), Toast.LENGTH_SHORT).show();
         }
     }
@@ -191,20 +202,6 @@ public class StationActivity extends ActionBarActivity {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
         return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
-
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
-        String line = "";
-        String result = "";
-
-        while((line = bufferedReader.readLine()) != null) {
-            result += line;
-        }
-
-        inputStream.close();
-
-        return result;
     }
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
@@ -231,7 +228,7 @@ public class StationActivity extends ActionBarActivity {
                 inputStream = httpResponse.getEntity().getContent();
 
                 // convert inputstream to string
-                if(inputStream != null) {
+                if (inputStream != null) {
                     result = convertInputStreamToString(inputStream);
                 } else {
                     result = "Did not work!";
@@ -252,36 +249,35 @@ public class StationActivity extends ActionBarActivity {
             mSpinner.setVisibility(View.GONE);
 
             mSynopDataItem = new ArrayList<SynopData>();
-            mSynopDataContainer = (ListView)findViewById(R.id.list_synop_data);
+            mSynopDataContainer = (ListView) findViewById(R.id.list_synop_data);
 
             try {
                 JSONObject json = new JSONObject(result.trim());
                 JSONArray synop = json.getJSONArray("synop");
 
-                for (int i = 0, size = synop.length(); i < size; i++)
-                {
+                for (int i = 0, size = synop.length(); i < size; i++) {
                     JSONObject objectInArray = synop.getJSONObject(i);
 
                     SynopData sData = new SynopData(
-                                            objectInArray.getString("rDATE"),
-                                            objectInArray.getString("rTIME"),
-                                            objectInArray.getString("rTMP"),
-                                            objectInArray.getString("rDPT"),
-                                            objectInArray.getString("rHR"),
-                                            objectInArray.getString("rWNDDIR"),
-                                            objectInArray.getString("rWNDSPD"),
-                                            objectInArray.getString("rWNDAVG"),
-                                            objectInArray.getString("rWNDGUST")
-                                    );
+                            objectInArray.getString("rDATE"),
+                            objectInArray.getString("rTIME"),
+                            objectInArray.getString("rTMP"),
+                            objectInArray.getString("rDPT"),
+                            objectInArray.getString("rHR"),
+                            objectInArray.getString("rWNDDIR"),
+                            objectInArray.getString("rWNDSPD"),
+                            objectInArray.getString("rWNDAVG"),
+                            objectInArray.getString("rWNDGUST")
+                    );
 
                     // set units
-                    if(mPreferenceTmp.equals("1")) {
+                    if (mPreferenceTmp.equals("1")) {
                         sData.setUnitTmpBehavior(new FahrenheitTmp());
                     }
 
-                    if(mPreferenceWnd.equals("1")) {
+                    if (mPreferenceWnd.equals("1")) {
                         sData.setUnitWndBehavior(new KnotsWnd());
-                    } else if(mPreferenceWnd.equals("2")) {
+                    } else if (mPreferenceWnd.equals("2")) {
                         sData.setUnitWndBehavior(new MphWnd());
                     }
 

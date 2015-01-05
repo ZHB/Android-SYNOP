@@ -26,9 +26,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.MapsInitializer;
@@ -50,6 +48,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity implements TextWatcher, AdapterView.OnItemClickListener {
 
+    public static FragmentManager fragmentManager;
     private String[] mDrawerTitles;
     private TypedArray mDrawerIcons;
     private ArrayList<Items> drawerItems;
@@ -60,10 +59,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
     private CharSequence mTitle;
     private Menu menu;
     private ArrayList<Station> mSearchSuggestions = new ArrayList<Station>();
-
     private ArrayList<Station> stationListItems;
-
-    public static FragmentManager fragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,8 +151,6 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         mDrawerContainer.setOnItemClickListener(new DrawerItemClickListener());
 
 
-
-
         //Set width of drawer
         DrawerLayout.LayoutParams lp = (DrawerLayout.LayoutParams) mDrawerContainer.getLayoutParams();
         lp.width = calculateDrawerWidth();
@@ -173,7 +167,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         stationListItems = new ArrayList<>();
 
         DbCursor sCursor = Db.getStations();
-        while(sCursor.moveToNext()) {
+        while (sCursor.moveToNext()) {
             // The Cursor is now set to the right position
             stationListItems.add(new Station(
                             sCursor.getLong(sCursor.getColumnIndex(DbContract.Station._ID)),
@@ -186,7 +180,6 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
             );
         }
     }
-
 
 
     @Override
@@ -227,7 +220,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
 
         this.menu = menu;
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 
             SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
@@ -238,7 +231,9 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
             search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
                 @Override
-                public boolean onQueryTextSubmit(String s) {return false;}
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
 
                 @Override
                 public boolean onQueryTextChange(String query) {
@@ -259,14 +254,14 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
 
     private void loadData(String query) {
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 
             // get suggestions from database
             Cursor cursor = Db.searchStationByName(query);
 
             // create an array with searched stations
             mSearchSuggestions.clear();
-            while(cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 mSearchSuggestions.add(new Station(
                         cursor.getLong(cursor.getColumnIndex(DbContract.Station._ID)),
                         cursor.getString(cursor.getColumnIndex(DbContract.Station.COLUMN_NAME_STATION)),
@@ -285,11 +280,9 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
 
             sv.setSuggestionsAdapter(new SearchSuggestionAdapter(this, cursor, mSearchSuggestions));
 
-            sv.setOnSuggestionListener(new SearchView.OnSuggestionListener()
-            {
+            sv.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
                 @Override
-                public boolean onSuggestionClick(int position)
-                {
+                public boolean onSuggestionClick(int position) {
                     Station station = mSearchSuggestions.get(position);
 
                     Intent intent = new Intent(getApplicationContext(), StationActivity.class);
@@ -301,9 +294,9 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
 
                     return true;
                 }
+
                 @Override
-                public boolean onSuggestionSelect(int position)
-                {
+                public boolean onSuggestionSelect(int position) {
                     return false;
                 }
             });
@@ -346,7 +339,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
 
         // navigation drawer width must be the smallest screen width size minus toolbar height
         // see : https://medium.com/sebs-top-tips/material-navigation-drawer-sizing-558aea1ad266
-        if(width >=  height) {
+        if (width >= height) {
             width = height;
         }
 
@@ -440,6 +433,14 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void onClick(View v) {
+        startActivity(new Intent(this, SettingsActivity.class));
+    }
 
     /**
      * Navigation drawer list click listener.
@@ -449,14 +450,5 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             selectItem(position);
         }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    public void onClick(View v) {
-        startActivity(new Intent(this, SettingsActivity.class));
     }
 }
