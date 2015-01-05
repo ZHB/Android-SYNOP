@@ -2,6 +2,8 @@
 <resources>
 
     <string name="app_name">SYNOP</string>
+    <string name="app_website">www.previmet.com</string>
+
     <string name="drawer_open">open</string>
     <string name="drawer_close">close</string>
     <string name="title_activity_search_results">Search Activity result</string>

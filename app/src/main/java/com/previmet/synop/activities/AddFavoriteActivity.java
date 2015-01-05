@@ -1,46 +1,31 @@
 package com.previmet.synop.activities;
 
-import android.app.Activity;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.previmet.synop.FavoriteListener;
 import com.previmet.synop.R;
 import com.previmet.synop.adapter.StationListAdapter;
-import com.previmet.synop.adapter.StationSearchAdapter;
 import com.previmet.synop.db.Db;
 import com.previmet.synop.db.DbContract;
 import com.previmet.synop.db.DbCursor;
-import com.previmet.synop.fragments.FavoritesFragment;
 import com.previmet.synop.ui.Station;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 public class AddFavoriteActivity extends ActionBarActivity {
 
-    private ArrayList<Station> stationListItems;
+    private ArrayList<Station> mStations;
     private StationListAdapter adapter;
 
     @Override
@@ -66,12 +51,12 @@ public class AddFavoriteActivity extends ActionBarActivity {
         * create a new array list for our navigation drawer that will contain Items object.
         * Items are created with text and icons.
         */
-        stationListItems = new ArrayList<Station>();
+        mStations = new ArrayList<>();
 
         DbCursor sCursor = Db.getStations();
         while(sCursor.moveToNext()) {
             // The Cursor is now set to the right position
-            stationListItems.add(new Station(
+            mStations.add(new Station(
                     sCursor.getLong(sCursor.getColumnIndex(DbContract.Station._ID)),
                     sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_STATION)),
                     sCursor.getString(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_WMO)),
@@ -86,8 +71,7 @@ public class AddFavoriteActivity extends ActionBarActivity {
         ListView stationListContainer = (ListView) findViewById(R.id.list_stations);
 
         // Set the adapter for the list view
-        //StationListAdapter adapter = new StationListAdapter(this, stationListItems);
-        adapter = new StationListAdapter(this, R.layout.station_list_item, stationListItems);
+        adapter = new StationListAdapter(this, R.layout.station_list_item, mStations);
         stationListContainer.setAdapter(adapter);
 
 
@@ -96,10 +80,10 @@ public class AddFavoriteActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
 
                 // get clicked station
-                Station station = stationListItems.get(position);
+                Station station = mStations.get(position);
 
                 // add the favorite to database
-                long fId = Db.addFavorite(station.getId());
+                Db.addFavorite(station.getId());
 
                 // stop the activity
                 Intent returnIntent = new Intent();

@@ -59,10 +59,8 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private Menu menu;
-    //private List<String> mSearchSuggestions = new ArrayList<String>();
     private ArrayList<Station> mSearchSuggestions = new ArrayList<Station>();
 
-    private AutoCompleteTextView myAutoComplete;
     private ArrayList<Station> stationListItems;
 
     public static FragmentManager fragmentManager;
@@ -89,8 +87,6 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
             View v = inflator.inflate(R.layout.toolbar, null);
 
             getSupportActionBar().setCustomView(v);
-
-
         }
 
         // get xml string and icons array for our menu res/values/strings.xml
@@ -104,7 +100,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         * create a new array list for our navigation drawer that will contain Items object.
         * Items are created with text and icons.
         */
-        drawerItems = new ArrayList<Items>();
+        drawerItems = new ArrayList<>();
         for (int i = 0; i < mDrawerTitles.length; i++) {
             drawerItems.add(new Items(mDrawerTitles[i], mDrawerIcons.getResourceId(i, -(i + 1))));
         }
@@ -170,20 +166,11 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         getSupportActionBar().setHomeButtonEnabled(true);
 
 
-
-
-        View viewBugReport = LayoutInflater.from(getApplicationContext()).inflate(R.layout.search_custom,null);
-        myAutoComplete = (AutoCompleteTextView) viewBugReport.findViewById(R.id.autoComplete_searchStation);
-
-
-        TextView footer_settings = (TextView) findViewById(R.id.footer_settings);
-
-
          /*
             * create a new array list for our navigation drawer that will contain Items object.
             * Items are created with text and icons.
             */
-        stationListItems = new ArrayList<Station>();
+        stationListItems = new ArrayList<>();
 
         DbCursor sCursor = Db.getStations();
         while(sCursor.moveToNext()) {
@@ -221,9 +208,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
     /* Called whenever we call invalidateOptionsMenu() */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerContainer);
-        //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -327,16 +312,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        int id = item.getItemId();
-
-        return super.onOptionsItemSelected(item);
+        return mDrawerToggle.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     /**
