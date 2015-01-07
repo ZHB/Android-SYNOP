@@ -32,14 +32,15 @@
                 <EditText android:id="@+id/eText_sSearch"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Search a station..."
-                    android:inputType="textFilter"
-                    android:textColor="@color/text_secondary"
                     android:background="@color/white"
+                    android:hint="@string/add_favorite_search_station"
+                    android:inputType="textFilter"
+                    android:paddingBottom="4dp"
                     android:paddingLeft="8dp"
                     android:paddingRight="8dp"
                     android:paddingTop="4dp"
-                    android:paddingBottom="4dp" />
+                    android:textColor="@color/text_secondary" />
+
                 <ListView
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/list_stations"
@@ -48,13 +49,13 @@
                     android:background="#fff"
                     android:choiceMode="singleChoice"
                     android:divider="@color/divider"
-                    android:paddingTop="8dp"
-                    android:paddingBottom="8dp"
                     android:dividerHeight="1dp"
-                    android:scrollbars="vertical"
-                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:fastScrollAlwaysVisible="true"
                     android:fastScrollEnabled="true"
-                    android:fastScrollAlwaysVisible="true" />
+                    android:paddingBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:scrollbarAlwaysDrawVerticalTrack="true"
+                    android:scrollbars="vertical" />
 
 
             </LinearLayout>

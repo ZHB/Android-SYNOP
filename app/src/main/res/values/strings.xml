@@ -44,6 +44,7 @@
     <string name="cab_item_delete">Delete</string>
 
 
+    <string name="add_favorite_search_station">Search a station...</string>
 
     <string name="edit_station_name">Station name</string>
     <string name="edit_station_elevation">Elevation</string>

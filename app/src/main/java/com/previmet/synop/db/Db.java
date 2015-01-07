@@ -66,12 +66,12 @@ public class Db {
     /**
      * Insert a station
      *
-     * @param station
-     * @param wmo
-     * @param elevation
-     * @param latitude
-     * @param longitude
-     * @param country
+     * @param station   Station name
+     * @param wmo       station identification code
+     * @param elevation station elevation
+     * @param latitude  station latitude
+     * @param longitude station longitude
+     * @param country   station country ID
      * @return ID of inserted row
      */
     public static long addStation(String station, String wmo, Integer elevation, Double latitude, Double longitude, long country) {

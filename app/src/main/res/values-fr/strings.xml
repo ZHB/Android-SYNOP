@@ -38,6 +38,8 @@
         <item quantity="other">%d mètres</item>
     </plurals>
 
+    <string name="add_favorite_search_station">Chercher une station...</string>
+
     <string name="action_settings">Préférences</string>
     <string name="cab_item_edit">Editer</string>
     <string name="cab_item_delete">Supprimer</string>
