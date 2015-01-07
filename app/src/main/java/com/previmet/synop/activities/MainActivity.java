@@ -27,10 +27,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.previmet.synop.R;
 import com.previmet.synop.adapter.DrawerAdapter;
 import com.previmet.synop.adapter.SearchSuggestionAdapter;
@@ -69,7 +67,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         // initialize database
         Db.initialize(this);
 
-        //fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
 
         // check for our toolbar xml layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -77,12 +75,6 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         // redefine default action bar with new toolbar
         if (toolbar != null) {
             setSupportActionBar(toolbar);
-
-
-            LayoutInflater inflator = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View v = inflator.inflate(R.layout.toolbar, null);
-
-            getSupportActionBar().setCustomView(v);
         }
 
         // get xml string and icons array for our menu res/values/strings.xml
@@ -100,7 +92,6 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         for (int i = 0; i < mDrawerTitles.length; i++) {
             drawerItems.add(new Items(mDrawerTitles[i], mDrawerIcons.getResourceId(i, -(i + 1))));
         }
-
 
         /*
         * Change toolbar title when navigation drawer is closed or opened
@@ -159,11 +150,10 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-
-         /*
-            * create a new array list for our navigation drawer that will contain Items object.
-            * Items are created with text and icons.
-            */
+        /*
+        * create a new array list for our navigation drawer that will contain Items object.
+        * Items are created with text and icons.
+        */
         stationListItems = new ArrayList<>();
 
         DbCursor sCursor = Db.getStations();
@@ -180,7 +170,6 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
             );
         }
     }
-
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -220,14 +209,15 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
 
         this.menu = menu;
 
+        /*
+            Crate seach view with suggestion for SDK > Honeycomb
+         */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 
             SearchManager manager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
             SearchView search = (SearchView) menu.findItem(R.id.action_search).getActionView();
 
             search.setSearchableInfo(manager.getSearchableInfo(getComponentName()));
-
             search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
                 @Override
@@ -237,21 +227,23 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
 
                 @Override
                 public boolean onQueryTextChange(String query) {
-
-
                     loadData(query);
-
                     return true;
                 }
 
             });
         }
 
-
         return true;
     }
 
 
+    /**
+     * Load data on query text change from search input.
+     * Get all stations that correspond to input string and set searcheable adapter for searchview
+     *
+     * @param query
+     */
     private void loadData(String query) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -272,14 +264,15 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
                         cursor.getDouble(cursor.getColumnIndex(DbContract.Station.COLUMN_NAME_LONGITUDE))));
             }
 
-
             SearchManager sm = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
+            // get searchview
             final SearchView sv = (SearchView) menu.findItem(R.id.action_search).getActionView();
             sv.setSearchableInfo(sm.getSearchableInfo(getComponentName()));
 
             sv.setSuggestionsAdapter(new SearchSuggestionAdapter(this, cursor, mSearchSuggestions));
 
+            // on suggestion list item click get the station then launch new intent
             sv.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
                 @Override
                 public boolean onSuggestionClick(int position) {
@@ -288,7 +281,6 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
                     Intent intent = new Intent(getApplicationContext(), StationActivity.class);
                     intent.putExtra("station", station);
                     startActivity(intent);
-
 
                     sv.clearFocus();
 
@@ -352,29 +344,25 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
      */
     private void selectItem(int position) {
 
+        // crate a bundle with stations list as argument. Thant bundle could be passed
+        // later to fragment argument
         final Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList("stations_list", stationListItems);
 
         Fragment fragment = null;
-        SupportMapFragment mapFragment = null;
 
         switch (position) {
             case 1:
                 fragment = new FavoritesFragment();
                 break;
             case 2:
-                bundle.putParcelableArrayList("stations_list", stationListItems);
-
                 fragment = new StationsFragment();
                 fragment.setArguments(bundle);
                 break;
             case 3:
-                bundle.putParcelableArrayList("stations_list", stationListItems);
-
-                mapFragment = new MapFragment();
-                mapFragment.setArguments(bundle);
-                break;
-            case 4:
-                fragment = new FavoritesFragment();
+                fragment = new MapFragment();
+                fragment.setArguments(bundle);
+                MapsInitializer.initialize(this);
                 break;
             default:
                 fragment = new FavoritesFragment();
@@ -385,37 +373,26 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
          * Insert fragment into main content view
          * http://stackoverflow.com/questions/19108843/mapfragment-return-null/19109093#19109093
          */
-        if (fragment != null && mapFragment == null) {
+        if (fragment != null) {
             // Insert the fragment by replacing any existing fragment
-            //FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager = getSupportFragmentManager();
 
             fragmentManager.beginTransaction()
                     .replace(R.id.main_content, fragment)
                     .commit();
+
+            // Highlight the selected item, update the title, and close the drawer
+            mDrawerContainer.setItemChecked(position, true);
+            setTitle(mDrawerTitles[position - 1]);
         }
 
-        if (mapFragment != null) {
-
-            fragmentManager = getSupportFragmentManager();
-
-            fragmentManager.beginTransaction()
-                    .replace(R.id.main_content, mapFragment)
-                    .commit();
-
-            MapsInitializer.initialize(this);
-        }
-
-        // Highlight the selected item, update the title, and close the drawer
-        mDrawerContainer.setItemChecked(position, true);
-        setTitle(mDrawerTitles[position - 1]);
         mDrawerLayout.closeDrawer(mDrawerContainer);
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "Click at : " + position, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -438,6 +415,7 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    // start Settings activity. This is the only onClick view available in the MainActivity class
     public void onClick(View v) {
         startActivity(new Intent(this, SettingsActivity.class));
     }

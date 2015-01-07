@@ -100,7 +100,7 @@ public class StationsFragment extends Fragment {
         stationListContainer = (ListView) rootView.findViewById(R.id.list_stations);
 
         /*
-        * create a new array list for our navigation drawer that will contain Items object.
+        * Get stations object from our fragment argument
         * Items are created with text and icons.
         */
         Bundle args = getArguments();

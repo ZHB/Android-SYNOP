@@ -180,6 +180,9 @@ public class StationActivity extends ActionBarActivity {
         }
     }
 
+    /**
+     * Check if ther is an internet connection, then call json in async task
+     */
     private void callJson() {
         // check mobile connexion status
         if (isConnected()) {
@@ -230,8 +233,6 @@ public class StationActivity extends ActionBarActivity {
                 // convert inputstream to string
                 if (inputStream != null) {
                     result = convertInputStreamToString(inputStream);
-                } else {
-                    result = "Did not work!";
                 }
 
             } catch (Exception e) {
@@ -280,7 +281,6 @@ public class StationActivity extends ActionBarActivity {
                     } else if (mPreferenceWnd.equals("2")) {
                         sData.setUnitWndBehavior(new MphWnd());
                     }
-
 
                     mSynopDataItem.add(sData);
                 }

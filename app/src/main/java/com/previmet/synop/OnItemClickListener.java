@@ -1,4 +1,4 @@
-package com.previmet.synop.adapter;
+package com.previmet.synop;
 
 import android.view.View;
 
@@ -6,5 +6,5 @@ import android.view.View;
  * Created by Vince on 25.12.2014.
  */
 public interface OnItemClickListener {
-    public void onItemClick(View view , int position);
+    public void onItemClick(View view, int position);
 }

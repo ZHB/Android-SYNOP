@@ -41,10 +41,9 @@ public class AddFavoriteActivity extends ActionBarActivity {
 
             setSupportActionBar(toolbar);
 
-            // display the back button
+            // display the back button and set title
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-            getSupportActionBar().setTitle("Add favorite");
+            getSupportActionBar().setTitle(getResources().getString(R.string.title_activity_add_favorite));
         }
 
         /*
