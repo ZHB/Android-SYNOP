@@ -6,9 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 /**
  * Created by Vince on 20.12.2014.
  */
@@ -118,6 +115,12 @@ public class Db {
         return new DbCursor(c);
     }
 
+    /**
+     * Search a station by his name
+     *
+     * @param q
+     * @return
+     */
     public static DbCursor searchStationByName(String q) {
         String[] projection = {
                 "s." + DbContract.Station._ID,
@@ -135,16 +138,22 @@ public class Db {
                         DbContract.Station.SQL_JOIN_COUNTRY
         );
 
-
         String selection = DbContract.Station.COLUMN_NAME_STATION + " LIKE ?";
         String[] selectionArgs = {String.valueOf("%" + q + "%")};
 
         Cursor c = qb.query(db, projection, selection, selectionArgs, null, null, DbContract.Station.COLUMN_NAME_STATION);
 
-
         return new DbCursor(c);
     }
 
+    /**
+     * Update station information
+     *
+     * @param id
+     * @param name
+     * @param elevation
+     * @return
+     */
     public static long updateStation(long id, String name, String elevation) {
         ContentValues values = new ContentValues();
 
@@ -159,6 +168,12 @@ public class Db {
         return updated;
     }
 
+    /**
+     * Add a new favorite
+     *
+     * @param station
+     * @return
+     */
     public static long addFavorite(long station) {
         ContentValues values = new ContentValues();
         values.put(DbContract.Favorite.COLUMN_NAME_ORDER, 1000);
@@ -170,6 +185,12 @@ public class Db {
     }
 
 
+    /**
+     * Delete a favorite
+     *
+     * @param id
+     * @return
+     */
     public static long deleteFavorite(long id) {
 
         String selection = DbContract.Favorite._ID + " LIKE ?";
@@ -206,34 +227,5 @@ public class Db {
         Cursor c = qb.query(db, projection, null, null, null, null, DbContract.Favorite.COLUMN_NAME_ORDER);
 
         return new DbCursor(c);
-    }
-
-
-    public static long addData(Calendar date, Double tmp, Double dewpoint, String wnddir,
-                               Double wndspd, Double wndavg, Double wndgust, int humidity,
-                               Double pressure, int visibility, int nebulosity, int condition,
-                               long station) {
-        ContentValues values = new ContentValues();
-
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-
-        values.put(DbContract.Data.COLUMN_NAME_DATETIME, formatter.format(date.getTime()));
-        values.put(DbContract.Data.COLUMN_NAME_TMP, tmp);
-        values.put(DbContract.Data.COLUMN_NAME_DEWPOINT, dewpoint);
-        values.put(DbContract.Data.COLUMN_NAME_WINDDIR, wnddir);
-        values.put(DbContract.Data.COLUMN_NAME_WINDSPEED, wndspd);
-        values.put(DbContract.Data.COLUMN_NAME_WINDAVG, wndavg);
-        values.put(DbContract.Data.COLUMN_NAME_WINDGUST, wndgust);
-        values.put(DbContract.Data.COLUMN_NAME_HUMIDITY, humidity);
-        values.put(DbContract.Data.COLUMN_NAME_PRESSURE, pressure);
-        values.put(DbContract.Data.COLUMN_NAME_VISIBILITY, visibility);
-        values.put(DbContract.Data.COLUMN_NAME_NEBULOSITY, nebulosity);
-        values.put(DbContract.Data.COLUMN_NAME_CONDITION, condition);
-        values.put(DbContract.Data.COLUMN_NAME_STATION, station);
-
-
-        long id = db.insert(DbContract.Station.TABLE_NAME, null, values);
-
-        return id;
     }
 }
