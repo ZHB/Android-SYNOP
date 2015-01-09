@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:state_enabled="true"
-        android:state_pressed="true" android:drawable="@color/divider" />
-    <item android:state_enabled="true"
-        android:state_focused="true" android:drawable="@color/divider" />
-    <item android:state_enabled="true"
-        android:state_selected="true" android:drawable="@color/divider" />
+    <!-- Pressed -->
+    <item android:drawable="@color/divider" android:state_focused="false" android:state_selected="true" />
+
+    <!-- Focused -->
+    <item android:drawable="@color/divider" android:state_enabled="true" android:state_focused="true" />
+
+    <item android:drawable="@color/divider" android:state_checked="true" android:state_selected="true" />
+
+    <!-- Selected -->
+    <item android:drawable="@color/divider" android:state_focused="true" android:state_selected="false" />
+
+    <!-- default -->
     <item
         android:drawable="@android:color/white" />
 </selector>

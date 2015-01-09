@@ -195,6 +195,7 @@ public class FavoritesFragment extends Fragment {
                         mActionMode = getActivity().startActionMode(mActionModeCallback);
                         mActionMode.setTag(position);
 
+                        view.setActivated(true);
                         view.setSelected(true);
                     }
                 }

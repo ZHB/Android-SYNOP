@@ -37,5 +37,7 @@
     <!-- Other App colors -->
     <color name="white">#ffffff</color>
 
+    <color name="transparent">#00000000</color>
+
 
 </resources>
