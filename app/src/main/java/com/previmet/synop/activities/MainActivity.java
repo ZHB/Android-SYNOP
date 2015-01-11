@@ -58,16 +58,24 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
     private Menu menu;
     private ArrayList<Station> mSearchSuggestions = new ArrayList<Station>();
     private ArrayList<Station> stationListItems;
+    private Fragment mFragment = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        fragmentManager = getSupportFragmentManager();
+
+        // load fragment if app is already running
+        if (savedInstanceState != null) {
+            mFragment = fragmentManager.findFragmentById(R.id.main_content);
+        }
+
+
         // initialize database
         Db.initialize(this);
 
-        fragmentManager = getSupportFragmentManager();
 
         // check for our toolbar xml layout
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -177,8 +185,11 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
 
-        // start default fragment view
-        selectItem(1);
+
+        // start default fragment view if no fragment is loaded
+        if (mFragment == null) {
+            selectItem(1);
+        }
     }
 
     @Override
@@ -349,23 +360,23 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         final Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("stations_list", stationListItems);
 
-        Fragment fragment = null;
+        //Fragment fragment = null;
 
         switch (position) {
             case 1:
-                fragment = new FavoritesFragment();
+                mFragment = new FavoritesFragment();
                 break;
             case 2:
-                fragment = new StationsFragment();
-                fragment.setArguments(bundle);
+                mFragment = new StationsFragment();
+                mFragment.setArguments(bundle);
                 break;
             case 3:
-                fragment = new MapFragment();
-                fragment.setArguments(bundle);
+                mFragment = new MapFragment();
+                mFragment.setArguments(bundle);
                 MapsInitializer.initialize(this);
                 break;
             default:
-                fragment = new FavoritesFragment();
+                mFragment = new FavoritesFragment();
                 break;
         }
 
@@ -373,12 +384,12 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
          * Insert fragment into main content view
          * http://stackoverflow.com/questions/19108843/mapfragment-return-null/19109093#19109093
          */
-        if (fragment != null) {
+        if (mFragment != null) {
             // Insert the fragment by replacing any existing fragment
-            fragmentManager = getSupportFragmentManager();
+            //fragmentManager = getSupportFragmentManager();
 
             fragmentManager.beginTransaction()
-                    .replace(R.id.main_content, fragment)
+                    .replace(R.id.main_content, mFragment)
                     .commit();
 
             // Highlight the selected item, update the title, and close the drawer

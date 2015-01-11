@@ -22,6 +22,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.previmet.synop.R;
@@ -88,6 +89,21 @@ public class MapFragment extends SupportMapFragment {
                     .target(new LatLng(DEFAULT_LATITUDE, DEFAULT_LONGITUDE)).zoom(DEFAULT_ZOOM).build();
             CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
             mGoogleMap.moveCamera(cameraUpdate);
+
+            // get visible bounds position on camera change
+            mGoogleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+                @Override
+                public void onCameraChange(CameraPosition cameraPosition) {
+
+                    LatLngBounds bounds = mGoogleMap.getProjection().getVisibleRegion().latLngBounds;
+
+
+                    String boundsRest = "?nelat=" + bounds.northeast.latitude + "?nelng=" + bounds.northeast.longitude +
+                            "?swlat=" + bounds.southwest.latitude + "?swlng=" + bounds.southwest.longitude;
+
+                    Toast.makeText(getActivity(), boundsRest, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
