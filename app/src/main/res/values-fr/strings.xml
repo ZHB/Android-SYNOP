@@ -12,9 +12,10 @@
     <string name="title_activity_add_favorite">Ajouter un favoris</string>
 
     <string-array name="drawer_titles">
-        <item>Favoris</item>
-        <item>Liste</item>
-        <item>Carte</item>
+        <item>Vue d\'ensemble</item>
+        <item>Météo horaire</item>
+        <item>Météo carte</item>
+        <item>Observations</item>
     </string-array>
 
     <array name="drawer_icons">
@@ -25,6 +26,7 @@
     <array name="drawer_icons_active">
         <item>@drawable/ic_favorite_black</item>
         <item>@drawable/ic_list_black</item>
+        <item>@drawable/ic_map_black</item>
         <item>@drawable/ic_map_black</item>
     </array>
 
@@ -43,7 +45,6 @@
     <string name="action_settings">Préférences</string>
     <string name="cab_item_edit">Editer</string>
     <string name="cab_item_delete">Supprimer</string>
-
 
 
     <string name="edit_station_name">Nom de la station</string>

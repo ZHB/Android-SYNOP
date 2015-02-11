@@ -8,15 +8,20 @@
     <dimen name="drawer_left">16dp</dimen>
     <dimen name="drawer_right">16dp</dimen>
     <dimen name="drawer_text_with_icon">72dp</dimen>
-    <dimen name="drawer_header_text">56dp</dimen>
+    <dimen name="drawer_header_text">55dp</dimen>
     <dimen name="drawer_grouping_padding">8dp</dimen>
     <dimen name="drawer_item_height">48dp</dimen>
-
 
 
     <!-- FAB -->
     <dimen name="fab_size">56dp</dimen>
     <dimen name="button_elevation">4dp</dimen>
     <dimen name="button_press_elevation">8dp</dimen>
+
+
+    <dimen name="action_bar_height">100dp</dimen>
+    <dimen name="header_height">200dp</dimen>
+    <dimen name="toolbar_left_margin">72dp</dimen>
+
 
 </resources>

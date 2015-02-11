@@ -17,7 +17,8 @@
             <LinearLayout
                 android:id="@+id/headerbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <include layout="@layout/toolbar" />
 
@@ -29,7 +30,11 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-
+                <!-- toolbar shadow -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="@drawable/toolbar_dropshadow" />
             </LinearLayout>
 
         </LinearLayout>

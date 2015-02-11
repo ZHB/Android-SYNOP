@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Point;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -27,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.MapsInitializer;
 import com.previmet.synop.R;
@@ -35,11 +37,14 @@ import com.previmet.synop.adapter.SearchSuggestionAdapter;
 import com.previmet.synop.db.Db;
 import com.previmet.synop.db.DbContract;
 import com.previmet.synop.db.DbCursor;
+import com.previmet.synop.fragments.DayOverviewFragment;
 import com.previmet.synop.fragments.FavoritesFragment;
+import com.previmet.synop.fragments.HourlyForecastFragment;
 import com.previmet.synop.fragments.MapFragment;
 import com.previmet.synop.fragments.StationsFragment;
 import com.previmet.synop.ui.Items;
 import com.previmet.synop.ui.Station;
+import com.previmet.synop.ui.location.MyLocation;
 
 import java.util.ArrayList;
 
@@ -47,6 +52,18 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity implements TextWatcher, AdapterView.OnItemClickListener {
 
     public static FragmentManager fragmentManager;
+    /**
+     * Location result listener. gotLocation is called if app got any location from
+     * network or gps
+     */
+    MyLocation.LocationResult locationResult = new MyLocation.LocationResult() {
+        @Override
+        public void gotLocation(Location location) {
+            //Got the location!
+
+            Toast.makeText(getApplicationContext(), "Lat: " + location.getLatitude() + " Lng: " + location.getLongitude() + " Alt: " + location.getAltitude() + " Provider: " + location.getProvider(), Toast.LENGTH_SHORT).show();
+        }
+    };
     private String[] mDrawerTitles;
     private TypedArray mDrawerIcons;
     private ArrayList<Items> drawerItems;
@@ -71,7 +88,6 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
         if (savedInstanceState != null) {
             mFragment = fragmentManager.findFragmentById(R.id.main_content);
         }
-
 
         // initialize database
         Db.initialize(this);
@@ -114,13 +130,17 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
                 R.string.drawer_close  /* "close drawer" description */
         ) {
 
-            /** Called when a drawer has settled in a completely closed state. */
+            /**
+             * Called when a drawer has settled in a completely closed state.
+             */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
                 getSupportActionBar().setTitle(mTitle);
             }
 
-            /** Called when a drawer has settled in a completely open state. */
+            /**
+             * Called when a drawer has settled in a completely open state.
+             */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 getSupportActionBar().setTitle(mDrawerTitle);
@@ -177,6 +197,17 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
                             sCursor.getDouble(sCursor.getColumnIndex(DbContract.Station.COLUMN_NAME_LONGITUDE)))
             );
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        /**
+         * Get user location if localisation service is enabled
+         */
+        MyLocation myLocation = new MyLocation();
+        myLocation.getLocation(this, locationResult);
     }
 
     @Override
@@ -364,13 +395,16 @@ public class MainActivity extends ActionBarActivity implements TextWatcher, Adap
 
         switch (position) {
             case 1:
-                mFragment = new FavoritesFragment();
+                mFragment = new DayOverviewFragment();
                 break;
             case 2:
+                mFragment = new HourlyForecastFragment();
+                break;
+            case 3:
                 mFragment = new StationsFragment();
                 mFragment.setArguments(bundle);
                 break;
-            case 3:
+            case 4:
                 mFragment = new MapFragment();
                 mFragment.setArguments(bundle);
                 MapsInitializer.initialize(this);

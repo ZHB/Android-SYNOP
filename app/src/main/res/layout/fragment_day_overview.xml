@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- A CardView that contains a TextView -->
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            card_view:cardCornerRadius="2dp"
+            card_view:cardElevation="2dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/accent_color_dark"
+                android:padding="16dp">
+
+                <LinearLayout
+                    android:id="@+id/hourly_forecast_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/hourly_forecast_day"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center_vertical"
+                        android:text="Aujourd'hui"
+                        android:textColor="@color/white"
+                        android:textSize="27sp" />
+
+                    <TextView
+                        android:id="@+id/favorite_station"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:text="Ensoleillé, quelques averses de neige"
+                        android:textColor="@color/white"
+                        android:textSize="13sp" />
+
+                    <RelativeLayout
+                        android:id="@+id/favorite_top"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/weather_icon"
+                            style="@style/AppTheme"
+                            android:layout_width="120dp"
+                            android:layout_height="120dp"
+                            android:layout_alignParentTop="false"
+                            android:background="#00000000"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/sunny_light_snow" />
+
+                        <TextView
+                            android:id="@+id/favorite_updated"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:fontFamily="sans-serif-light"
+                            android:gravity="end"
+                            android:singleLine="false"
+                            android:text="0°"
+                            android:textColor="@color/white"
+                            android:textSize="70sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+
+        <!-- A CardView that contains a TextView -->
+        <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_view2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            card_view:cardCornerRadius="4dp"
+            card_view:cardElevation="2dp">
+
+            <HorizontalScrollView
+                android:id="@+id/hsv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/innerLay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/day_01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp">
+
+                        <TextView
+                            android:id="@+id/weather_data"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Lun."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:id="@+id/weather_icon_day_1"
+                            style="@style/AppTheme"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="#00000000"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/sunny_light_snow"
+                            android:text="New Button" />
+
+                        <TextView
+                            android:id="@+id/weather_data1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="-1°/1°"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/day_02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp">
+
+                        <TextView
+                            android:id="@+id/weather_data2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Mar."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:id="@+id/weather_icon_day_2"
+                            style="@style/AppTheme"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="#00000000"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/sunny_light_snow" />
+
+                        <TextView
+                            android:id="@+id/weather_temp2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="-2°/0°"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/day_03"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp">
+
+                        <TextView
+                            android:id="@+id/weather_data3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Mer."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:id="@+id/weather_icon_day_3"
+                            style="@style/AppTheme"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="#00000000"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/sunny_light_snow" />
+
+                        <TextView
+                            android:id="@+id/weather_temp3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="-5°/-1°"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/day_04"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp">
+
+                        <TextView
+                            android:id="@+id/weather_data4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Jeu."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:id="@+id/weather_icon_day_4"
+                            style="@style/AppTheme"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="#00000000"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/sunny_light_snow" />
+
+                        <TextView
+                            android:id="@+id/weather_temp4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="-7°/-1°"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/day_05"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp">
+
+                        <TextView
+                            android:id="@+id/weather_data5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Ven."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:id="@+id/weather_icon_day_5"
+                            style="@style/AppTheme"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:background="#00000000"
+                            android:scaleType="fitCenter"
+                            android:src="@drawable/sunny_light_snow" />
+
+                        <TextView
+                            android:id="@+id/weather_temp5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="-7°/-2°"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+</ScrollView>

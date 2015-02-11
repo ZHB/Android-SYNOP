@@ -13,13 +13,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.previmet.synop.R;
 import com.previmet.synop.activities.AddFavoriteActivity;
-import com.previmet.synop.activities.StationActivity;
-import com.previmet.synop.adapter.FavoriteAdapter;
+import com.previmet.synop.activities.HourlyForecastOverviewActivity;
+import com.previmet.synop.adapter.HourlyForecastAdapter;
 import com.previmet.synop.db.Db;
 import com.previmet.synop.db.DbContract;
 import com.previmet.synop.db.DbCursor;
@@ -28,12 +27,12 @@ import com.previmet.synop.ui.Station;
 import java.util.ArrayList;
 
 
-public class FavoritesFragment extends Fragment {
+public class HourlyForecastFragment extends Fragment {
 
     static final int ADD_FAVORITE = 1;
     private TextView hourlyListView;
     private ArrayList<Station> stationListItems;
-    private FavoriteAdapter fa;
+    private HourlyForecastAdapter fa;
     private AddFavoriteActivity addFav;
     private RecyclerView recList;
     private View rootView;
@@ -93,13 +92,16 @@ public class FavoritesFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
+
         // the rootView is our Favorite_Fragment java.fragments.FavoritesFragment
-        rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
+        rootView = inflater.inflate(R.layout.fragment_hourly_forecast, container, false);
 
 
         recList = (RecyclerView) rootView.findViewById(R.id.cardList);
@@ -126,19 +128,9 @@ public class FavoritesFragment extends Fragment {
             );
         }
 
-        fa = new FavoriteAdapter(stationListItems);
+        fa = new HourlyForecastAdapter(stationListItems);
         recList.setAdapter(fa);
 
-        // start favorite add activity
-        ImageButton fabFavorite = (ImageButton) rootView.findViewById(R.id.fab_add_favorite);
-        fabFavorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View arg0) {
-                Intent intent = new Intent(rootView.getContext(), AddFavoriteActivity.class);
-                startActivityForResult(intent, ADD_FAVORITE);
-            }
-
-        });
 
         return rootView;
     }
@@ -172,7 +164,7 @@ public class FavoritesFragment extends Fragment {
 
 
         // add a listener on the RecyclerView adapter
-        fa.SetOnItemClickListener(new FavoriteAdapter.OnItemClickListener() {
+        fa.SetOnItemClickListener(new HourlyForecastAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
 
@@ -180,27 +172,12 @@ public class FavoritesFragment extends Fragment {
                 Station station = stationListItems.get(position);
 
                 // start a new intent with station as extra then start activity
-                Intent intent = new Intent(view.getContext(), StationActivity.class);
+                Intent intent = new Intent(view.getContext(), HourlyForecastOverviewActivity.class);
                 intent.putExtra("station", station);
                 getActivity().startActivity(intent);
             }
         });
 
 
-        fa.SetOnItemPressedListener(
-                new FavoriteAdapter.OnItemPressedListener() {
-                    @Override
-                    public void onItemPressed(View view, int position) {
-
-                        // Start the CAB using the ActionMode.Callback defined above
-                        mActionMode = getActivity().startActionMode(mActionModeCallback);
-                        mActionMode.setTag(position);
-
-                        view.setActivated(true);
-                        view.setSelected(true);
-                    }
-                }
-
-        );
     }
 }

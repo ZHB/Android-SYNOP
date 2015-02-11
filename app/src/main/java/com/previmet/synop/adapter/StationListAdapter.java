@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -23,6 +24,43 @@ public class StationListAdapter extends ArrayAdapter<Station> implements Filtera
     private ArrayList<Station> items;
     private ArrayList<Station> itemsAll;
     private ArrayList<Station> suggestions;
+    Filter nameFilter = new Filter() {
+        @Override
+        public String convertResultToString(Object resultValue) {
+            String str = ((Station) (resultValue)).getName();
+            return str;
+        }
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            if (constraint != null) {
+                suggestions.clear();
+                for (Station customer : itemsAll) {
+                    if (customer.getName().toLowerCase().startsWith(constraint.toString().toLowerCase())) {
+                        suggestions.add(customer);
+                    }
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = suggestions;
+                filterResults.count = suggestions.size();
+                return filterResults;
+            } else {
+                return new FilterResults();
+            }
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            ArrayList<Station> filteredList = (ArrayList<Station>) results.values;
+            if (results != null && results.count > 0) {
+                clear();
+                for (Station c : filteredList) {
+                    add(c);
+                }
+                notifyDataSetChanged();
+            }
+        }
+    };
     private int viewResourceId;
     private Context context;
     private HashMap<Integer, Boolean> mSelection = new HashMap<Integer, Boolean>();
@@ -57,6 +95,11 @@ public class StationListAdapter extends ArrayAdapter<Station> implements Filtera
             sComplementary.setText(station.getCountry() + " - " + elevation);
 
         }
+
+        // add animation at bottom.
+        convertView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_slide_in_bottom));
+        convertView.setVisibility(View.VISIBLE);
+
         return convertView;
     }
 
@@ -73,56 +116,20 @@ public class StationListAdapter extends ArrayAdapter<Station> implements Filtera
     public Set<Integer> getCurrentCheckedPosition() {
         return mSelection.keySet();
     }
+
     public void removeSelection(int position) {
         mSelection.remove(position);
         notifyDataSetChanged();
     }
+
     public void clearSelection() {
         mSelection = new HashMap<Integer, Boolean>();
         notifyDataSetChanged();
     }
 
-
-
     @Override
     public Filter getFilter() {
         return nameFilter;
     }
-
-    Filter nameFilter = new Filter() {
-        @Override
-        public String convertResultToString(Object resultValue) {
-            String str = ((Station)(resultValue)).getName();
-            return str;
-        }
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            if(constraint != null) {
-                suggestions.clear();
-                for (Station customer : itemsAll) {
-                    if(customer.getName().toLowerCase().startsWith(constraint.toString().toLowerCase())){
-                        suggestions.add(customer);
-                    }
-                }
-                FilterResults filterResults = new FilterResults();
-                filterResults.values = suggestions;
-                filterResults.count = suggestions.size();
-                return filterResults;
-            } else {
-                return new FilterResults();
-            }
-        }
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            ArrayList<Station> filteredList = (ArrayList<Station>) results.values;
-            if(results != null && results.count > 0) {
-                clear();
-                for (Station c : filteredList) {
-                    add(c);
-                }
-                notifyDataSetChanged();
-            }
-        }
-    };
 
 }
